@@ -29,6 +29,5 @@ public:
 
 	static int getCounter();
 
-	void update(sf::RenderWindow& target);
 	void render(sf::RenderTarget& target);
 };

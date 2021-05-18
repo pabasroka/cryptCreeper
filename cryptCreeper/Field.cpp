@@ -51,7 +51,8 @@ void Field::mouseClick(sf::RenderWindow& target)
 
 	if (mousePos.x < this->xPos + size && mousePos.x > this->xPos
 		&& mousePos.y < this->yPos + size && mousePos.y > this->yPos)
-		std::cout << "field[" << xPos << "][" << yPos << "] \n";
+		;
+		//std::cout << "field[" << xPos << "][" << yPos << "] \n";
 }
 
 int Field::getCounter()
