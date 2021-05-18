@@ -3,11 +3,13 @@
 #include "HUD.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Coin.h"
 
 class Area
 {
 	std::vector<Field*> fields;
 	std::vector<Enemy*> enemies;
+	std::vector<Coin*> coins;
 	HUD hud;
 	Player player;
 

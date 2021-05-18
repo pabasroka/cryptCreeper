@@ -29,7 +29,6 @@ Enemy::Enemy(int posX, int posY)
 
 Enemy::~Enemy()
 {
-	delete this;
 }
 
 void Enemy::render(sf::RenderTarget& target)

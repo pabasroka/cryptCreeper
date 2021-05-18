@@ -12,6 +12,7 @@ void Area::initNewArea()
 	}
 	enemies.push_back(new Enemy(400, 400));
 	enemies.push_back(new Enemy(200, 200));
+	coins.push_back(new Coin(600, 800));
 
 	this->timerMax = 5;
 	this->timer = this->timerMax;
@@ -42,7 +43,8 @@ void Area::update(sf::RenderWindow& target)
 			this->player.setScore(100);
 		}
 
-	this->hud.setText(this->player.getSword(), this->player.getShield(), this->player.getCoin());
+	this->hud.setText(this->player.getSword(), this->player.getShield(),
+		this->player.getCoin(), this->player.getScore());
 
 
 	
@@ -74,6 +76,9 @@ void Area::render(sf::RenderTarget& target)
 
 	for (size_t i = 0; i < enemies.size(); i++)
 		this->enemies[i]->render(target);
+
+	for (size_t i = 0; i < coins.size(); i++)
+		this->coins[i]->render(target);
 
 	this->player.render(target);
 

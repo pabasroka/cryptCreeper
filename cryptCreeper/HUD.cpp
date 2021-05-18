@@ -40,9 +40,9 @@ void HUD::initHUD()
 	this->coin.setScale(sf::Vector2f(3.f, 3.f));
 
 	this->heart.setPosition(sf::Vector2f(20.f, 1020.f));
-	this->sword.setPosition(sf::Vector2f(20.f, 1150.f));
-	this->shield.setPosition(sf::Vector2f(350.f, 1150.f));
-	this->coin.setPosition(sf::Vector2f(680.f, 1150.f));
+	this->sword.setPosition(sf::Vector2f(120.f, 1150.f));
+	this->shield.setPosition(sf::Vector2f(450.f, 1150.f));
+	this->coin.setPosition(sf::Vector2f(780.f, 1150.f));
 
 
 	//Text
@@ -57,24 +57,29 @@ void HUD::initHUD()
 	
 	this->coinText = this->swordText;
 	this->coinText.setPosition(sf::Vector2f(680.f, 1150.f));	
+
+	this->scoreText = this->swordText;
+	this->scoreText.setFillColor(sf::Color::Cyan);
+	this->scoreText.setPosition(sf::Vector2f(680.f, 1020.f));
 }
 
 HUD::HUD()
 {
 	this->initVariable();
 	this->initHUD();
-	this->setText(swordValue, shieldValue, coinValue);
+	this->setText(swordValue, shieldValue, coinValue, scoreValue);
 }
 
 HUD::~HUD()
 {
 }
 
-void HUD::setText(int sword, int shield, int coin)
+void HUD::setText(int sword, int shield, int coin, int scoreValue)
 {
 	this->swordText.setString(std::to_string(sword));
 	this->shieldText.setString(std::to_string(shield));
 	this->coinText.setString(std::to_string(coin));
+	this->scoreText.setString(std::to_string(scoreValue));
 }
 
 void HUD::render(sf::RenderTarget& target, int hearts)
@@ -86,6 +91,7 @@ void HUD::render(sf::RenderTarget& target, int hearts)
 	target.draw(this->swordText);
 	target.draw(this->shieldText);
 	target.draw(this->coinText);
+	target.draw(this->scoreText);
 
 	switch (hearts)
 	{
