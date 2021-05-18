@@ -1,12 +1,9 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Network.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Audio.hpp>
+#include "Object.h"
 #include "Enemy.h"
 class Enemy;
-class Player
+
+class Player : public Object
 {
 	//Stats
 	int hp;
@@ -14,20 +11,12 @@ class Player
 	int money;
 	int score;
 
-	//Position
-	int posX;
-	int posY;
-
-	//Sprites
-	int rectSize;
-	sf::Texture texture;
-	sf::Sprite playerSprite;
 
 	//Others
 	int movementTimer;
 	int movementTimerMax;
 
-	void initVariables();
+	void initVariables(int posX, int posY);
 	void move();
 	friend bool isPlayerIntersectSomething(Player& player, Enemy* enemy);
 
@@ -35,9 +24,8 @@ public:
 	Player();
 	virtual ~Player();
 
-	sf::Vector2f getPosition();
+	void addScore(int score);
 
 	void update();
-	void render(sf::RenderTarget& target);
 };
 

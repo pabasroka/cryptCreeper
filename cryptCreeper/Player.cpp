@@ -1,14 +1,13 @@
 #include "Player.h"
 
-void Player::initVariables()
+void Player::initVariables(int posX, int posY)
 {
-	this->rectSize = 48;
-	if (!this->texture.loadFromFile("Sprites/sprites.png"))
-		throw "Could not load textures \n";
-	this->playerSprite.setTexture(this->texture);
-	this->playerSprite.setTextureRect(sf::IntRect(0 * this->rectSize,
+	this->sprite.setTextureRect(sf::IntRect(0 * this->rectSize,
 		0 * this->rectSize, this->rectSize, this->rectSize));
-	this->playerSprite.setScale(sf::Vector2f(4.f, 4.f));
+	this->sprite.setScale(sf::Vector2f(4.f, 4.f));
+
+	this->posX = 400;
+	this->posY = 800;
 
 	this->hp = 3;
 	this->dmg = 1;
@@ -19,8 +18,6 @@ void Player::initVariables()
 	
 	this->movementTimerMax = 5;
 	this->movementTimer = this->movementTimerMax;
-
-	this->playerSprite.setPosition(this->posX, this->posY);
 }
 
 void Player::move()
@@ -46,17 +43,13 @@ void Player::move()
 }
 
 Player::Player()
+	: Object(posX, posY)
 {
-	this->initVariables();
+	this->initVariables(posX, posY);
 }
 
 Player::~Player()
 {
-}
-
-sf::Vector2f Player::getPosition()
-{
-	return sf::Vector2f(this->posX, this->posY);
 }
 
 void Player::addScore(int score)
@@ -67,10 +60,5 @@ void Player::addScore(int score)
 void Player::update()
 {
 	this->move();
-	this->playerSprite.setPosition(this->posX, this->posY);
-}
-
-void Player::render(sf::RenderTarget& target)
-{
-	target.draw(this->playerSprite);
+	this->sprite.setPosition(this->posX, this->posY);
 }
