@@ -15,6 +15,8 @@ Game::Game()
 
 Game::~Game()
 {
+	delete this->window;
+	delete this->area;
 }
 
 void Game::pollEvents()
@@ -42,7 +44,10 @@ const bool Game::running() const
 void Game::update()
 {
 	this->pollEvents();
-	this->area->update(*this->window);
+	if (this->area->endGame())
+		this->area->update(*this->window);
+	else
+		std::cout << "GAME OVER";
 }
 
 void Game::render()

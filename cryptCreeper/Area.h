@@ -11,12 +11,18 @@ class Area
 	HUD hud;
 	Player player;
 
+	//dev tools
+	int timerMax;
+	int timer;
+
 	void initNewArea();
 	friend bool isPlayerIntersectSomething(Player& player, Enemy* enemy);
 
 public:
 	Area();
 	virtual ~Area();
+
+	bool endGame();
 
 	void update(sf::RenderWindow& target);
 	void render(sf::RenderTarget& target);

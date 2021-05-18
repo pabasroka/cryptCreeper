@@ -10,8 +10,9 @@ void Player::initVariables(int posX, int posY)
 	this->posY = 800;
 
 	this->hp = 3;
-	this->dmg = 1;
-	this->money = 0;
+	this->sword = 1;
+	this->shield = 1;
+	this->coin = 0;
 	this->score = 0;
 	this->posX = 400;
 	this->posY = 800;
@@ -34,9 +35,8 @@ void Player::move()
 			this->posX += 200;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && this->posY > 0)
 			this->posY -= 200;
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && this->posY < 1000)
-			this->posY += 200;
+		/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && this->posY < 1000)
+			this->posY += 200;*/
 
 		this->movementTimer = 0;
 	}
@@ -52,13 +52,66 @@ Player::~Player()
 {
 }
 
-void Player::addScore(int score)
+void Player::setScore(int score)
 {
 	this->score += score;
 }
 
+void Player::setHp(int hp)
+{
+	this->hp += hp;
+}
+
+void Player::setCoin(int coin)
+{
+	this->coin += coin;
+}
+
+bool Player::isDead()
+{
+	if (hp <= 0)
+		return true;
+	else return false;
+}
+
+int Player::getSword()
+{
+	return this->sword;
+}
+
+int Player::getShield()
+{
+	return this->shield;
+}
+
+int Player::getHp()
+{
+	return this->hp;
+}
+
+int Player::getCoin()
+{
+	return this->coin;
+}
+
+int Player::getScore()
+{
+	return this->score;
+}
+
+void Player::setSword(int sword)
+{
+	this->sword += sword;
+}
+
+void Player::setShield(int shield)
+{
+	this->shield += shield;
+}
+
 void Player::update()
 {
+	this->isDead();
 	this->move();
 	this->sprite.setPosition(this->posX, this->posY);
 }

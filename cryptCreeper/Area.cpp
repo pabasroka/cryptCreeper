@@ -11,6 +11,10 @@ void Area::initNewArea()
 		}
 	}
 	enemies.push_back(new Enemy(400, 400));
+	enemies.push_back(new Enemy(200, 200));
+
+	this->timerMax = 5;
+	this->timer = this->timerMax;
 }
 
 Area::Area()
@@ -24,6 +28,8 @@ Area::~Area()
 
 void Area::update(sf::RenderWindow& target)
 {
+	this->endGame();
+
 	for (size_t i = 0; i < fields.size(); i++)
 		this->fields[i]->mouseClick(target);
 
@@ -33,9 +39,31 @@ void Area::update(sf::RenderWindow& target)
 		if (isPlayerIntersectSomething(this->player, this->enemies[i]))
 		{
 			this->enemies.erase(this->enemies.begin() + i);
-			this->player.addScore(100);
+			this->player.setScore(100);
 		}
+
+	this->hud.setText(this->player.getSword(), this->player.getShield(), this->player.getCoin());
+
+
 	
+	//dev tools
+	if (this->timer <= this->timerMax)
+		this->timer++;
+
+	if (this->timer >= 5)
+	{
+		this->timer = 0;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
+			this->player.setHp(-1);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+			this->player.setCoin(1);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
+			this->player.setSword(1);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+			this->player.setShield(1);
+	}
+
 }
 
 void Area::render(sf::RenderTarget& target)
@@ -50,7 +78,15 @@ void Area::render(sf::RenderTarget& target)
 	this->player.render(target);
 
 	//Render bottom of screen
-	this->hud.render(target);
+	this->hud.render(target, this->player.getHp());
+}
+
+bool Area::endGame()
+{
+	if (!this->player.isDead())
+		return true;
+	else
+		return false;
 }
 
 bool isPlayerIntersectSomething(Player& player, Enemy* enemy)

@@ -13,6 +13,16 @@ class HUD
 	sf::Sprite sword;
 	sf::Sprite shield;
 	sf::Sprite heart;
+	sf::Sprite coin;
+
+	sf::Font font;
+	sf::Text swordText;
+	sf::Text shieldText;
+	sf::Text coinText;
+
+	int swordValue;
+	int shieldValue;
+	int coinValue;
 
 	void initVariable();
 	void initHUD();
@@ -21,6 +31,8 @@ public:
 	HUD();
 	virtual ~HUD();
 
-	void render(sf::RenderTarget& target);
+	void setText(int swordValue = 0, int shieldValue = 0, int coinValue = 0);
+
+	void render(sf::RenderTarget& target, int hearts);
 };
 

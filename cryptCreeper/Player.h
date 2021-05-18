@@ -7,10 +7,10 @@ class Player : public Object
 {
 	//Stats
 	int hp;
-	int dmg;
-	int money;
+	int sword;
+	int shield;
+	int coin;
 	int score;
-
 
 	//Others
 	int movementTimer;
@@ -24,7 +24,18 @@ public:
 	Player();
 	virtual ~Player();
 
-	void addScore(int score);
+	// Getters / setters
+	int getHp();
+	int getSword();
+	int getShield();
+	int getCoin();
+	int getScore();
+	void setHp(int hp);
+	void setSword(int sword);
+	void setShield(int shield);
+	void setScore(int score);
+	void setCoin(int coin);
+	bool isDead();
 
 	void update();
 };
