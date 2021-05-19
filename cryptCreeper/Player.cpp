@@ -23,7 +23,7 @@ void Player::initVariables(int posX, int posY)
 
 void Player::move()
 {
-	//Player can move only up, right, left 
+	//Player can move up, down, right, left but cant go back
 	if (this->movementTimer < this->movementTimerMax)
 		this->movementTimer++;
 
@@ -35,8 +35,8 @@ void Player::move()
 			this->posX += 200;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && this->posY > 0)
 			this->posY -= 200;
-		/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && this->posY < 1000)
-			this->posY += 200;*/
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && this->posY < 800)
+			this->posY += 200;
 
 		this->movementTimer = 0;
 	}

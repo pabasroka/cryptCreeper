@@ -20,7 +20,7 @@ void HUD::initHUD()
 {
 	//Background
 	this->background.setSize(sf::Vector2f(1000.f, 300.f));
-	this->background.setFillColor(sf::Color::Red);
+	this->background.setFillColor(sf::Color(3, 3, 28));
 	this->background.setPosition(sf::Vector2f(0.f, 1000.f));
 
 
@@ -60,7 +60,8 @@ void HUD::initHUD()
 
 	this->scoreText = this->swordText;
 	this->scoreText.setFillColor(sf::Color::Cyan);
-	this->scoreText.setPosition(sf::Vector2f(680.f, 1020.f));
+	this->scoreText.setCharacterSize(80);
+	this->scoreText.setPosition(sf::Vector2f(600.f, 1020.f));
 }
 
 HUD::HUD()
@@ -79,7 +80,7 @@ void HUD::setText(int sword, int shield, int coin, int scoreValue)
 	this->swordText.setString(std::to_string(sword));
 	this->shieldText.setString(std::to_string(shield));
 	this->coinText.setString(std::to_string(coin));
-	this->scoreText.setString(std::to_string(scoreValue));
+	this->scoreText.setString("Score: " +  std::to_string(scoreValue));
 }
 
 void HUD::render(sf::RenderTarget& target, int hearts)

@@ -17,9 +17,9 @@ void Field::initField()
 {
 	//Field parameters
 	this->field.setSize(sf::Vector2f(this->size, this->size));
-	this->field.setFillColor(sf::Color::Green);
+	this->field.setFillColor(sf::Color(3, 3, 28));
 	this->field.setOutlineThickness(5.f);
-	this->field.setOutlineColor(sf::Color::Blue);
+	this->field.setOutlineColor(sf::Color(15, 64, 5));
 	this->field.setPosition(sf::Vector2f(this->xPos, this->yPos));
 
 	//Field text
