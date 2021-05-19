@@ -18,7 +18,7 @@ class Area
 	int timer;
 
 	void initNewArea();
-	friend bool isPlayerIntersectSomething(Player& player, Enemy* enemy);
+	void randomizer(int posX, int posY);
 
 public:
 	Area();

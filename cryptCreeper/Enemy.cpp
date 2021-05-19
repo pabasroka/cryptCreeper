@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-void Enemy::initVariables(int posX, int posY)
+void Enemy::initVariables(int posX, int posY, int power)
 {
 	if (!this->font.loadFromFile("Fonts/AncientModernTales-a7Po.ttf"))
 		throw "Could not load font \n";
@@ -10,7 +10,7 @@ void Enemy::initVariables(int posX, int posY)
 		0 * this->rectSize, this->rectSize, this->rectSize));
 	this->sprite.setScale(sf::Vector2f(4.f, 4.f));
 
-	this->power = 1;
+	this->power = power;
 
 	//Field text
 	this->text.setCharacterSize(120);
@@ -21,10 +21,10 @@ void Enemy::initVariables(int posX, int posY)
 	this->text.setString(std::to_string(this->power));
 }
 
-Enemy::Enemy(int posX, int posY)
+Enemy::Enemy(int posX, int posY, int power)
 	: Object(posX, posY)
 {
-	this->initVariables(posX, posY);
+	this->initVariables(posX, posY, power);
 }
 
 Enemy::~Enemy()

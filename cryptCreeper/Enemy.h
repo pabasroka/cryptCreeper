@@ -10,11 +10,11 @@ class Enemy : public Object
 	sf::Font font;
 	sf::Text text;
 
-	void initVariables(int posX, int posY);
-	friend bool isPlayerIntersectSomething(Player& player, Enemy* enemy);
+	void initVariables(int posX, int posY, int power);
+	friend bool isPlayerIntersectSomething(Player& player, Object* object);
 
 public:
-	Enemy(int posX, int posY);
+	Enemy(int posX, int posY, int power);
 	virtual ~Enemy();
 	virtual void render(sf::RenderTarget& target);
 };

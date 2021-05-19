@@ -9,6 +9,7 @@ void Player::initVariables(int posX, int posY)
 	this->posX = 400;
 	this->posY = 800;
 
+	this->lvl = 1;
 	this->hp = 3;
 	this->sword = 1;
 	this->shield = 1;
@@ -16,6 +17,11 @@ void Player::initVariables(int posX, int posY)
 	this->score = 0;
 	this->posX = 400;
 	this->posY = 800;
+	this->movementArea[4][2] = 1;
+	this->currentPos.x = 4;
+	this->currentPos.y = 3;
+	this->posX = 4;
+	this->posY = 3;
 	
 	this->movementTimerMax = 5;
 	this->movementTimer = this->movementTimerMax;
@@ -29,8 +35,13 @@ void Player::move()
 
 	if (this->movementTimer >= this->movementTimerMax)
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && this->posX > 0)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && this->posX > 0
+			&& this->movementArea[this->currentPos.x, this->currentPos.y - 1] == 0)
+		{
 			this->posX -= 200;
+			//movementArea[posX, posY] = 1;
+		
+		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->posX < 800)
 			this->posX += 200;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && this->posY > 0)
@@ -84,6 +95,11 @@ int Player::getShield()
 	return this->shield;
 }
 
+int Player::getLvl()
+{
+	return this->lvl;
+}
+
 int Player::getHp()
 {
 	return this->hp;
@@ -97,6 +113,12 @@ int Player::getCoin()
 int Player::getScore()
 {
 	return this->score;
+}
+
+void Player::setLvl(int lvl)
+{
+	if (this->lvl <= 9) //max level 10
+		this->lvl += lvl;
 }
 
 void Player::setSword(int sword)

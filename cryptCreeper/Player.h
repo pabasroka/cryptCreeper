@@ -6,6 +6,7 @@ class Enemy;
 class Player : public Object
 {
 	//Stats
+	int lvl; //hidden value (MAX lvl - 10)
 	int hp;
 	int sword;
 	int shield;
@@ -15,21 +16,28 @@ class Player : public Object
 	//Others
 	int movementTimer;
 	int movementTimerMax;
+	sf::Vector2i currentPos;
+	int posX;
+	int posY;
 
 	void initVariables(int posX, int posY);
 	void move();
-	friend bool isPlayerIntersectSomething(Player& player, Enemy* enemy);
+	friend bool isPlayerIntersectSomething(Player& player, Object* object);
 
 public:
 	Player();
 	virtual ~Player();
 
+	bool movementArea[5][5]{};
+
 	// Getters / setters
+	int getLvl();
 	int getHp();
 	int getSword();
 	int getShield();
 	int getCoin();
 	int getScore();
+	void setLvl(int lvl);
 	void setHp(int hp);
 	void setSword(int sword);
 	void setShield(int shield);
