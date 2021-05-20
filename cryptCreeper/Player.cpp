@@ -6,9 +6,6 @@ void Player::initVariables(int posX, int posY)
 		0 * this->rectSize, this->rectSize, this->rectSize));
 	this->sprite.setScale(sf::Vector2f(4.f, 4.f));
 
-	this->posX = 400;
-	this->posY = 800;
-
 	this->lvl = 1;
 	this->hp = 3;
 	this->sword = 1;
@@ -19,9 +16,7 @@ void Player::initVariables(int posX, int posY)
 	this->posY = 800;
 	this->movementArea[4][2] = 1;
 	this->currentPos.x = 4;
-	this->currentPos.y = 3;
-	this->posX = 4;
-	this->posY = 3;
+	this->currentPos.y = 2;
 	
 	this->movementTimerMax = 5;
 	this->movementTimer = this->movementTimerMax;
@@ -36,19 +31,31 @@ void Player::move()
 	if (this->movementTimer >= this->movementTimerMax)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && this->posX > 0
-			&& this->movementArea[this->currentPos.x, this->currentPos.y - 1] == 0)
+			&& this->movementArea[this->currentPos.x][this->currentPos.y - 1] == 0)
 		{
 			this->posX -= 200;
-			//movementArea[posX, posY] = 1;
-		
+			this->currentPos.y--;		
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->posX < 800)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->posX < 800
+			&& this->movementArea[this->currentPos.x][this->currentPos.y + 1] == 0)
+		{
 			this->posX += 200;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && this->posY > 0)
+			this->currentPos.y++;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && this->posY > 0
+			&& this->movementArea[this->currentPos.x - 1][this->currentPos.y] == 0)
+		{
 			this->posY -= 200;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && this->posY < 800)
+			this->currentPos.x--;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && this->posY < 800
+			&& this->movementArea[this->currentPos.x + 1][this->currentPos.y] == 0)
+		{
 			this->posY += 200;
+			this->currentPos.x++;
+		}
 
+		this->movementArea[this->currentPos.x][this->currentPos.y] = 1;
 		this->movementTimer = 0;
 	}
 }
@@ -136,4 +143,16 @@ void Player::update()
 	this->isDead();
 	this->move();
 	this->sprite.setPosition(this->posX, this->posY);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+	{
+		for (size_t i = 0; i < 5; i++)
+		{
+			for (size_t j = 0; j < 5; j++)
+			{
+				std::cout << movementArea[i][j] << " ";
+			}
+			std::cout << "\n";
+		}
+	}
 }

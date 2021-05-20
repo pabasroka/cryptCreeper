@@ -16,10 +16,7 @@ class Player : public Object
 	//Others
 	int movementTimer;
 	int movementTimerMax;
-	sf::Vector2i currentPos;
-	int posX;
-	int posY;
-
+	
 	void initVariables(int posX, int posY);
 	void move();
 	friend bool isPlayerIntersectSomething(Player& player, Object* object);
@@ -28,6 +25,8 @@ public:
 	Player();
 	virtual ~Player();
 
+	//Movement
+	sf::Vector2i currentPos;
 	bool movementArea[5][5]{};
 
 	// Getters / setters
