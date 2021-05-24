@@ -76,6 +76,7 @@ void Player::nextAreaSettings()
 
 bool Player::isAnyLegitMove()
 {
+	// top left, top right, bottom left, bottom right fields
 	if ((this->currentPos.x == 0 && this->currentPos.y == 0) &&
 		(this->movementArea[1][0] == 1 && this->movementArea[0][1] == 1))
 		return false;
@@ -90,15 +91,62 @@ bool Player::isAnyLegitMove()
 		return false;
 	else
 	{
-		if (this->movementArea[this->currentPos.x + 1][this->currentPos.y] == 0
-			|| this->movementArea[this->currentPos.x - 1][this->currentPos.y] == 0
-			|| this->movementArea[this->currentPos.x][this->currentPos.y + 1] == 0
-			|| this->movementArea[this->currentPos.x][this->currentPos.y - 1] == 0)
-			return true;
-		else 
-			return false;
+		// Center fields
+		if (this->currentPos.x < 4 && this->currentPos.x > 0
+			&& this->currentPos.y < 4 && this->currentPos.y > 0) 
+		{
+			if (this->movementArea[this->currentPos.x + 1][this->currentPos.y] == 0
+				|| this->movementArea[this->currentPos.x - 1][this->currentPos.y] == 0
+				|| this->movementArea[this->currentPos.x][this->currentPos.y + 1] == 0
+				|| this->movementArea[this->currentPos.x][this->currentPos.y - 1] == 0)
+				return true;
+			else
+				return false;
+		}
+		else
+		{
+			// last row
+			if (this->currentPos.x == 4) 
+			{
+				if ( this->movementArea[this->currentPos.x - 1][this->currentPos.y] == 0
+					|| this->movementArea[this->currentPos.x][this->currentPos.y + 1] == 0
+					|| this->movementArea[this->currentPos.x][this->currentPos.y - 1] == 0)
+					return true;
+				else
+					return false;
+			}
+			//first row
+			else if (this->currentPos.x == 0) 
+			{
+				if (this->movementArea[this->currentPos.x + 1][this->currentPos.y] == 0
+					|| this->movementArea[this->currentPos.x][this->currentPos.y + 1] == 0
+					|| this->movementArea[this->currentPos.x][this->currentPos.y - 1] == 0)
+					return true;
+				else
+					return false;
+			}
+			//left column
+			else if (this->currentPos.y == 0) 
+			{
+				if (this->movementArea[this->currentPos.x + 1][this->currentPos.y] == 0
+					|| this->movementArea[this->currentPos.x - 1][this->currentPos.y] == 0
+					|| this->movementArea[this->currentPos.x][this->currentPos.y + 1] == 0)
+					return true;
+				else
+					return false;
+			}
+			//right column
+			else if (this->currentPos.y == 4) 
+			{
+				if (this->movementArea[this->currentPos.x + 1][this->currentPos.y] == 0
+					|| this->movementArea[this->currentPos.x - 1][this->currentPos.y] == 0
+					|| this->movementArea[this->currentPos.x][this->currentPos.y - 1] == 0)
+					return true;
+				else
+					return false;
+			}
+		}
 	}
-
 }
 
 // Constructor / destructor
