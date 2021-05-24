@@ -6,8 +6,23 @@ void Enemy::initVariables(int posX, int posY, int power)
 		throw "Could not load font \n";
 	this->text.setFont(this->font);
 
-	this->sprite.setTextureRect(sf::IntRect(1 * this->rectSize,
-		0 * this->rectSize, this->rectSize, this->rectSize));
+	switch (power)
+	{
+	case 1:
+		this->sprite.setTextureRect(sf::IntRect(1 * this->rectSize,
+			0 * this->rectSize, this->rectSize, this->rectSize));
+		break;
+	case 2:
+		this->sprite.setTextureRect(sf::IntRect(2 * this->rectSize,
+			0 * this->rectSize, this->rectSize, this->rectSize));
+		break;
+	default:
+		this->sprite.setTextureRect(sf::IntRect(1 * this->rectSize,
+			0 * this->rectSize, this->rectSize, this->rectSize));
+		break;
+	}
+
+
 	this->sprite.setScale(sf::Vector2f(4.f, 4.f));
 
 	this->power = power;

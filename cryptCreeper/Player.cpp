@@ -72,6 +72,7 @@ void Player::nextAreaSettings()
 	this->movementArea[4][2] = 1;
 	this->currentPos.x = 4;
 	this->currentPos.y = 2;
+	this->lvl++;
 }
 
 bool Player::isAnyLegitMove()

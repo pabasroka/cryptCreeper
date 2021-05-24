@@ -29,6 +29,8 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Portal.cpp" />
+    <ClCompile Include="Shield.cpp" />
+    <ClCompile Include="Sword.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Area.h" />
@@ -40,6 +42,8 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Portal.h" />
+    <ClInclude Include="Shield.h" />
+    <ClInclude Include="Sword.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

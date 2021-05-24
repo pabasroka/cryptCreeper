@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Objects">
+      <UniqueIdentifier>{ced5b03c-ea71-4e82-92f1-bd2ef57c1f07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects">
+      <UniqueIdentifier>{1fc24b00-3bfd-471d-94e4-c179a1dbf13e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,20 +36,26 @@
     <ClCompile Include="HUD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Coin.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Portal.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Shield.cpp">
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,20 +71,26 @@
     <ClInclude Include="HUD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Coin.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Coin.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Portal.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Shield.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -25,10 +25,10 @@ void Area::initNewArea()
 	{
 		for (size_t j = 0; j < 5; j++)
 		{
-			//create portal 
+			// create portal in first row 
 			if (j == 0 && i == portalPos)
 				portal = new Portal(i * 200, j * 200);
-			else //add objects (enemies, coins, items, etc)
+			else // add objects (enemies, coins, items, etc)
 				randomizer(i * 200, j * 200);
 		}
 	}
@@ -36,68 +36,63 @@ void Area::initNewArea()
 
 void Area::randomizer(int posX, int posY)
 {
-	int randomNumber = rand() % 100;
-
-	if (randomNumber >= 0 && randomNumber <= 50) //enemy
-	{
-		//inside next randomizer (enemy power level)
-		int randomEnemy = rand() % this->player.getLvl();
-
-		switch (randomEnemy)
-		{
-			case 1: default:
-				enemies.push_back(new Enemy(posX, posY, 1));
-				break;
-			case 2:
-				enemies.push_back(new Enemy(posX, posY, 2));
-				break;
-			case 3:
-				enemies.push_back(new Enemy(posX, posY, 3));
-				break;
-			case 4:
-				enemies.push_back(new Enemy(posX, posY, 4));
-				break;
-			case 5:
-				enemies.push_back(new Enemy(posX, posY, 5));
-				break;
-			case 6:
-				enemies.push_back(new Enemy(posX, posY, 6));
-				break;
-			case 7:
-				enemies.push_back(new Enemy(posX, posY, 7));
-				break;
-			case 8:
-				enemies.push_back(new Enemy(posX, posY, 8));
-				break;
-			case 9:
-				enemies.push_back(new Enemy(posX, posY, 9));
-				break;
-			case 10:
-				enemies.push_back(new Enemy(posX, posY, 10));
-				break;
-		}
-		
-	}
-	else if (randomNumber > 50 && randomNumber <= 100) //coin
+	bool condition = (rand() % 100) < 30;
+	if (condition)
 	{
 		coins.push_back(new Coin(posX, posY));
+		return;
 	}
-	/*else if (randomNumber > 30 && randomNumber <= 70) //
-	{
-	}
-	else if (randomNumber > 70 && randomNumber <= 85)
-	{
-	}
-	else if (randomNumber > 85 && randomNumber <= 90)
-	{
 
-	}
-	else if (randomNumber > 90 && randomNumber <= 95)
+	condition = (rand() % 100) < 20;
+	if (condition)
 	{
+		swords.push_back(new Sword(posX, posY));
+		return;
 	}
-	else if (randomNumber > 95 && randomNumber <= 100)
+
+	condition = (rand() % 100) < 20;
+	if (condition)
 	{
-	}*/
+		shields.push_back(new Shield(posX, posY));
+		return;
+	}
+
+	// If the previous conditions doesn't run
+	int randomEnemy = rand() % this->player.getLvl();
+
+	switch (randomEnemy)
+	{
+	case 1: default:
+		enemies.push_back(new Enemy(posX, posY, 1));
+		break;
+	case 2:
+		enemies.push_back(new Enemy(posX, posY, 2));
+		break;
+	case 3:
+		enemies.push_back(new Enemy(posX, posY, 3));
+		break;
+	case 4:
+		enemies.push_back(new Enemy(posX, posY, 4));
+		break;
+	case 5:
+		enemies.push_back(new Enemy(posX, posY, 5));
+		break;
+	case 6:
+		enemies.push_back(new Enemy(posX, posY, 6));
+		break;
+	case 7:
+		enemies.push_back(new Enemy(posX, posY, 7));
+		break;
+	case 8:
+		enemies.push_back(new Enemy(posX, posY, 8));
+		break;
+	case 9:
+		enemies.push_back(new Enemy(posX, posY, 9));
+		break;
+	case 10:
+		enemies.push_back(new Enemy(posX, posY, 10));
+		break;
+	}
 }
 
 bool isPlayerIntersectSomething(Player& player, Object* object)
@@ -140,6 +135,8 @@ void Area::update(sf::RenderWindow& target)
 	{
 		this->enemies.clear();
 		this->coins.clear();
+		this->shields.clear();
+		this->swords.clear();
 		this->player.nextAreaSettings();
 		this->initNewArea();
 	}
@@ -159,11 +156,27 @@ void Area::update(sf::RenderWindow& target)
 			this->player.setScore(100);
 		}
 
+	for (size_t i = 0; i < this->swords.size(); i++)
+		if (isPlayerIntersectSomething(this->player, this->swords[i]))
+		{
+			this->swords.erase(this->swords.begin() + i);
+			this->player.setSword(this->swords[i]->getDmg());
+			this->player.setScore(100);
+		}
+
+	for (size_t i = 0; i < this->shields.size(); i++)
+		if (isPlayerIntersectSomething(this->player, this->shields[i]))
+		{
+			this->shields.erase(this->shields.begin() + i);
+			this->player.setSword(this->shields[i]->getArmor());
+			this->player.setScore(100);
+		}
+
+	// User interface stats text
 	this->hud.setText(this->player.getSword(), this->player.getShield(),
 		this->player.getCoin(), this->player.getScore());
 
 
-	
 	//dev tools
 	if (this->timer <= this->timerMax)
 		this->timer++;
@@ -205,6 +218,12 @@ void Area::render(sf::RenderTarget& target)
 
 	for (size_t i = 0; i < coins.size(); i++)
 		this->coins[i]->render(target);
+
+	for (size_t i = 0; i < swords.size(); i++)
+		this->swords[i]->render(target);
+
+	for (size_t i = 0; i < shields.size(); i++)
+		this->shields[i]->render(target);
 
 	this->portal->render(target);
 
