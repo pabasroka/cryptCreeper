@@ -19,6 +19,7 @@ class Player : public Object
 	
 	void initVariables(int posX, int posY);
 	void move();
+	bool isAnyLegitMove();
 	friend bool isPlayerIntersectSomething(Player& player, Object* object);
 
 public:

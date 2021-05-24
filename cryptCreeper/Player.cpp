@@ -28,36 +28,72 @@ void Player::move()
 	if (this->movementTimer < this->movementTimerMax)
 		this->movementTimer++;
 
-	if (this->movementTimer >= this->movementTimerMax)
+	if (this->isAnyLegitMove())
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && this->posX > 0
-			&& this->movementArea[this->currentPos.x][this->currentPos.y - 1] == 0)
+		if (this->movementTimer >= this->movementTimerMax)
 		{
-			this->posX -= 200;
-			this->currentPos.y--;		
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->posX < 800
-			&& this->movementArea[this->currentPos.x][this->currentPos.y + 1] == 0)
-		{
-			this->posX += 200;
-			this->currentPos.y++;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && this->posY > 0
-			&& this->movementArea[this->currentPos.x - 1][this->currentPos.y] == 0)
-		{
-			this->posY -= 200;
-			this->currentPos.x--;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && this->posY < 800
-			&& this->movementArea[this->currentPos.x + 1][this->currentPos.y] == 0)
-		{
-			this->posY += 200;
-			this->currentPos.x++;
-		}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && this->posX > 0
+				&& this->movementArea[this->currentPos.x][this->currentPos.y - 1] == 0)
+			{
+				this->posX -= 200;
+				this->currentPos.y--;
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->posX < 800
+				&& this->movementArea[this->currentPos.x][this->currentPos.y + 1] == 0)
+			{
+				this->posX += 200;
+				this->currentPos.y++;
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && this->posY > 0
+				&& this->movementArea[this->currentPos.x - 1][this->currentPos.y] == 0)
+			{
+				this->posY -= 200;
+				this->currentPos.x--;
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && this->posY < 800
+				&& this->movementArea[this->currentPos.x + 1][this->currentPos.y] == 0)
+			{
+				this->posY += 200;
+				this->currentPos.x++;
+			}
 
-		this->movementArea[this->currentPos.x][this->currentPos.y] = 1;
-		this->movementTimer = 0;
+			this->movementArea[this->currentPos.x][this->currentPos.y] = 1;
+			this->movementTimer = 0;
+		}
 	}
+	else
+	{
+		std::cout << "GAME OVER you cant move in any direction \n";
+	}
+
+	
+}
+
+bool Player::isAnyLegitMove()
+{
+	if ((this->currentPos.x == 0 && this->currentPos.y == 0) &&
+		(this->movementArea[1][0] == 1 && this->movementArea[0][1] == 1))
+		return false;
+	else if ((this->currentPos.x == 0 && this->currentPos.y == 4) &&
+		(this->movementArea[1][4] == 1 || this->movementArea[0][3] == 1))
+		return false;
+	else if ((this->currentPos.x == 4 && this->currentPos.y == 0) &&
+		(this->movementArea[3][0] == 1 || this->movementArea[4][1] == 1))
+		return false;
+	else if ((this->currentPos.x == 4 && this->currentPos.y == 4) &&
+		(this->movementArea[4][3] == 1 || this->movementArea[3][4] == 1))
+		return false;
+	else
+	{
+		if (this->movementArea[this->currentPos.x + 1][this->currentPos.y] == 0
+			|| this->movementArea[this->currentPos.x - 1][this->currentPos.y] == 0
+			|| this->movementArea[this->currentPos.x][this->currentPos.y + 1] == 0
+			|| this->movementArea[this->currentPos.x][this->currentPos.y - 1] == 0)
+			return true;
+		else 
+			return false;
+	}
+
 }
 
 Player::Player()
