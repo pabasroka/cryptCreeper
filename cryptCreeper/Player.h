@@ -29,6 +29,8 @@ public:
 	//Movement
 	sf::Vector2i currentPos;
 	bool movementArea[5][5]{};
+	void showMovementArea();
+	void clearMovementArea();
 
 	// Getters / setters
 	int getLvl();
@@ -43,7 +45,10 @@ public:
 	void setShield(int shield);
 	void setScore(int score);
 	void setCoin(int coin);
+	void setPosition(int posX, int posY);
 	bool isDead();
+
+	void nextAreaSettings();
 
 	void update();
 };

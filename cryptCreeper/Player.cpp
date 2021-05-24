@@ -12,11 +12,8 @@ void Player::initVariables(int posX, int posY)
 	this->shield = 1;
 	this->coin = 0;
 	this->score = 0;
-	this->posX = 400;
-	this->posY = 800;
-	this->movementArea[4][2] = 1;
-	this->currentPos.x = 4;
-	this->currentPos.y = 2;
+
+	this->nextAreaSettings();
 	
 	this->movementTimerMax = 5;
 	this->movementTimer = this->movementTimerMax;
@@ -38,19 +35,19 @@ void Player::move()
 				this->posX -= 200;
 				this->currentPos.y--;
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->posX < 800
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->posX < 800
 				&& this->movementArea[this->currentPos.x][this->currentPos.y + 1] == 0)
 			{
 				this->posX += 200;
 				this->currentPos.y++;
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && this->posY > 0
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && this->posY > 0
 				&& this->movementArea[this->currentPos.x - 1][this->currentPos.y] == 0)
 			{
 				this->posY -= 200;
 				this->currentPos.x--;
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && this->posY < 800
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && this->posY < 800
 				&& this->movementArea[this->currentPos.x + 1][this->currentPos.y] == 0)
 			{
 				this->posY += 200;
@@ -65,8 +62,16 @@ void Player::move()
 	{
 		std::cout << "GAME OVER you cant move in any direction \n";
 	}
+}
 
-	
+void Player::nextAreaSettings()
+{
+	this->posX = 400;
+	this->posY = 800;
+	this->clearMovementArea();
+	this->movementArea[4][2] = 1;
+	this->currentPos.x = 4;
+	this->currentPos.y = 2;
 }
 
 bool Player::isAnyLegitMove()
@@ -75,13 +80,13 @@ bool Player::isAnyLegitMove()
 		(this->movementArea[1][0] == 1 && this->movementArea[0][1] == 1))
 		return false;
 	else if ((this->currentPos.x == 0 && this->currentPos.y == 4) &&
-		(this->movementArea[1][4] == 1 || this->movementArea[0][3] == 1))
+		(this->movementArea[1][4] == 1 && this->movementArea[0][3] == 1))
 		return false;
 	else if ((this->currentPos.x == 4 && this->currentPos.y == 0) &&
-		(this->movementArea[3][0] == 1 || this->movementArea[4][1] == 1))
+		(this->movementArea[3][0] == 1 && this->movementArea[4][1] == 1))
 		return false;
 	else if ((this->currentPos.x == 4 && this->currentPos.y == 4) &&
-		(this->movementArea[4][3] == 1 || this->movementArea[3][4] == 1))
+		(this->movementArea[4][3] == 1 && this->movementArea[3][4] == 1))
 		return false;
 	else
 	{
@@ -96,6 +101,7 @@ bool Player::isAnyLegitMove()
 
 }
 
+// Constructor / destructor
 Player::Player()
 	: Object(posX, posY)
 {
@@ -106,6 +112,7 @@ Player::~Player()
 {
 }
 
+// Getters / setters
 void Player::setScore(int score)
 {
 	this->score += score;
@@ -136,6 +143,24 @@ int Player::getSword()
 int Player::getShield()
 {
 	return this->shield;
+}
+
+void Player::showMovementArea()
+{
+	std::cout << "\n=========================\n";
+	for (size_t i = 0; i < 5; i++)
+	{
+		for (size_t j = 0; j < 5; j++)
+			std::cout << this->movementArea[i][j] << " ";
+		std::cout << "\n";
+	}
+}
+
+void Player::clearMovementArea()
+{
+	for (size_t i = 0; i < 5; i++)
+		for (size_t j = 0; j < 5; j++)
+			this->movementArea[i][j] = 0;
 }
 
 int Player::getLvl()
@@ -174,21 +199,15 @@ void Player::setShield(int shield)
 	this->shield += shield;
 }
 
+void Player::setPosition(int posX, int posY)
+{
+	this->posX = posX;
+	this->posY = posY;
+}
+
 void Player::update()
 {
 	this->isDead();
 	this->move();
 	this->sprite.setPosition(this->posX, this->posY);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
-	{
-		for (size_t i = 0; i < 5; i++)
-		{
-			for (size_t j = 0; j < 5; j++)
-			{
-				std::cout << movementArea[i][j] << " ";
-			}
-			std::cout << "\n";
-		}
-	}
 }

@@ -1,24 +1,37 @@
 #include "Area.h"
 
-void Area::initNewArea()
+void Area::initFirstArea()
 {
-	int lvl = this->player.getLvl();
-	if (lvl == 0)
-		lvl = 1;
-
 	for (size_t i = 0; i < 5; i++)
 	{
 		for (size_t j = 0; j < 5; j++)
 		{
 			//create fields
 			fields.push_back(new Field(i * 200, j * 200, 200));
-			//add objects (enemies, coins, items, etc)
-			randomizer(i * 200, j * 200);
 		}
 	}
+
+	this->initNewArea();
 	
 	this->timerMax = 5;
 	this->timer = this->timerMax;
+}
+
+void Area::initNewArea()
+{
+	int portalPos = rand() % 5;
+
+	for (size_t i = 0; i < 5; i++)
+	{
+		for (size_t j = 0; j < 5; j++)
+		{
+			//create portal 
+			if (j == 0 && i == portalPos)
+				portal = new Portal(i * 200, j * 200);
+			else //add objects (enemies, coins, items, etc)
+				randomizer(i * 200, j * 200);
+		}
+	}
 }
 
 void Area::randomizer(int posX, int posY)
@@ -99,7 +112,7 @@ bool isPlayerIntersectSomething(Player& player, Object* object)
 
 Area::Area()
 {
-	this->initNewArea();
+	this->initFirstArea();
 }
 
 Area::~Area()
@@ -122,6 +135,14 @@ void Area::update(sf::RenderWindow& target)
 		this->fields[i]->mouseClick(target);
 
 	this->player.update();
+
+	if (isPlayerIntersectSomething(this->player, this->portal))
+	{
+		this->enemies.clear();
+		this->coins.clear();
+		this->player.nextAreaSettings();
+		this->initNewArea();
+	}
 
 	for (size_t i = 0; i < this->enemies.size(); i++)
 		if (isPlayerIntersectSomething(this->player, this->enemies[i]))
@@ -165,7 +186,7 @@ void Area::update(sf::RenderWindow& target)
 			std::cout << this->player.getLvl();
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
-			std::cout << this->player.movementArea[3][4];
+			this->player.showMovementArea();
 	}
 
 }
@@ -184,6 +205,8 @@ void Area::render(sf::RenderTarget& target)
 
 	for (size_t i = 0; i < coins.size(); i++)
 		this->coins[i]->render(target);
+
+	this->portal->render(target);
 
 	this->player.render(target);
 }
