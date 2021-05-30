@@ -97,21 +97,21 @@ void HUD::render(sf::RenderTarget& target, int hearts)
 	switch (hearts)
 	{
 	case 1:
-		this->heart.setPosition(sf::Vector2f(20.f, 1020.f));
+		this->heart.setPosition(sf::Vector2f(120.f, 1020.f));
 		target.draw(this->heart);
 		break;
 	case 2:
-		this->heart.setPosition(sf::Vector2f(20.f, 1020.f));
+		this->heart.setPosition(sf::Vector2f(120.f, 1020.f));
 		target.draw(this->heart);
-		this->heart.setPosition(sf::Vector2f(60.f, 1020.f));
+		this->heart.setPosition(sf::Vector2f(200.f, 1020.f));
 		target.draw(this->heart);
 		break;
 	case 3:
-		this->heart.setPosition(sf::Vector2f(20.f, 1020.f));
+		this->heart.setPosition(sf::Vector2f(120.f, 1020.f));
 		target.draw(this->heart);
-		this->heart.setPosition(sf::Vector2f(60.f, 1020.f));
+		this->heart.setPosition(sf::Vector2f(200.f, 1020.f));
 		target.draw(this->heart);
-		this->heart.setPosition(sf::Vector2f(100.f, 1020.f));
+		this->heart.setPosition(sf::Vector2f(280.f, 1020.f));
 		target.draw(this->heart);
 		break;
 	}

@@ -6,18 +6,21 @@ void Enemy::initVariables(int posX, int posY, int power)
 		throw "Could not load font \n";
 	this->text.setFont(this->font);
 
-	switch (power)
+	this->power = power;
+	this->frame = 0;
+
+	switch (this->power)
 	{
 	case 1:
-		this->sprite.setTextureRect(sf::IntRect(1 * this->rectSize,
+		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize,
 			0 * this->rectSize, this->rectSize, this->rectSize));
 		break;
 	case 2:
-		this->sprite.setTextureRect(sf::IntRect(2 * this->rectSize,
+		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize,
 			0 * this->rectSize, this->rectSize, this->rectSize));
 		break;
 	default:
-		this->sprite.setTextureRect(sf::IntRect(1 * this->rectSize,
+		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize,
 			0 * this->rectSize, this->rectSize, this->rectSize));
 		break;
 	}
@@ -25,7 +28,9 @@ void Enemy::initVariables(int posX, int posY, int power)
 
 	this->sprite.setScale(sf::Vector2f(4.f, 4.f));
 
-	this->power = power;
+	this->timerMax = 50;
+	this->timer = this->timerMax;
+	
 
 	//Field text
 	this->text.setCharacterSize(120);
@@ -36,6 +41,33 @@ void Enemy::initVariables(int posX, int posY, int power)
 	this->text.setString(std::to_string(this->power));
 }
 
+void Enemy::animation()
+{
+	if (this->timer <= this->timerMax)
+		this->timer++;
+
+	if (this->timer >= 50)
+	{
+		this->timer = 0;
+
+		switch (this->frame)
+		{
+		case 0:
+			this->frame = 1;
+			break;
+		case 1:
+			this->frame = 2;
+			break;
+		case 2:
+			this->frame = 0;
+			break;
+		}
+
+		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize,
+			this->frame * this->rectSize, this->rectSize, this->rectSize));
+	}
+}
+
 Enemy::Enemy(int posX, int posY, int power)
 	: Object(posX, posY)
 {
@@ -44,6 +76,16 @@ Enemy::Enemy(int posX, int posY, int power)
 
 Enemy::~Enemy()
 {
+}
+
+int Enemy::getPower()
+{
+	return this->power;
+}
+
+void Enemy::update()
+{
+	this->animation();
 }
 
 void Enemy::render(sf::RenderTarget& target)

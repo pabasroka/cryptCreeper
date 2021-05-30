@@ -28,7 +28,7 @@ void Area::initNewArea()
 			// create portal in first row 
 			if (j == 0 && i == portalPos)
 				portal = new Portal(i * 200, j * 200);
-			else // add objects (enemies, coins, items, etc)
+			else if (j != 4 || i != 2) // add objects (enemies, coins, items, etc)
 				randomizer(i * 200, j * 200);
 		}
 	}
@@ -50,7 +50,7 @@ void Area::randomizer(int posX, int posY)
 		return;
 	}
 
-	condition = (rand() % 100) < 20;
+	condition = (rand() % 100) < 10;
 	if (condition)
 	{
 		shields.push_back(new Shield(posX, posY));
@@ -102,7 +102,6 @@ bool isPlayerIntersectSomething(Player& player, Object* object)
 		return true;
 	else
 		return false;
-
 }
 
 Area::Area()
@@ -141,35 +140,41 @@ void Area::update(sf::RenderWindow& target)
 		this->initNewArea();
 	}
 
+	int scoreDrop = rand() % this->player.getLvl() * 50 + this->player.getLvl() * 20;
+
 	for (size_t i = 0; i < this->enemies.size(); i++)
+	{
+		this->enemies[i]->update();
 		if (isPlayerIntersectSomething(this->player, this->enemies[i]))
 		{
+			this->player.setScore(scoreDrop);
+			this->player.setHp(this->enemies[i]->getPower());
 			this->enemies.erase(this->enemies.begin() + i);
-			this->player.setScore(100);
 		}
+	}
 
 	for (size_t i = 0; i < this->coins.size(); i++)
 		if (isPlayerIntersectSomething(this->player, this->coins[i]))
-		{
+		{		
+			this->player.setCoin(1);
+			this->player.setScore(scoreDrop);
 			this->coins.erase(this->coins.begin() + i);
-			this->player.setCoin(2);
-			this->player.setScore(100);
 		}
 
 	for (size_t i = 0; i < this->swords.size(); i++)
 		if (isPlayerIntersectSomething(this->player, this->swords[i]))
 		{
-			this->swords.erase(this->swords.begin() + i);
 			this->player.setSword(this->swords[i]->getDmg());
-			this->player.setScore(100);
+			this->player.setScore(scoreDrop);
+			this->swords.erase(this->swords.begin() + i);
 		}
 
 	for (size_t i = 0; i < this->shields.size(); i++)
 		if (isPlayerIntersectSomething(this->player, this->shields[i]))
-		{
+		{		
+			this->player.setShield(this->shields[i]->getArmor());
+			this->player.setScore(scoreDrop);
 			this->shields.erase(this->shields.begin() + i);
-			this->player.setSword(this->shields[i]->getArmor());
-			this->player.setScore(100);
 		}
 
 	// User interface stats text

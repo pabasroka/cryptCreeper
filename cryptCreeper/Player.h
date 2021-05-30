@@ -29,6 +29,7 @@ public:
 	//Movement
 	sf::Vector2i currentPos;
 	bool movementArea[5][5]{};
+
 	void showMovementArea();
 	void clearMovementArea();
 

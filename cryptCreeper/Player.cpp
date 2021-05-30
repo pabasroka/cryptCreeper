@@ -15,7 +15,7 @@ void Player::initVariables(int posX, int posY)
 
 	this->nextAreaSettings();
 	
-	this->movementTimerMax = 5;
+	this->movementTimerMax = 7;
 	this->movementTimer = this->movementTimerMax;
 }
 
@@ -161,6 +161,24 @@ Player::~Player()
 {
 }
 
+void Player::showMovementArea()
+{
+	std::cout << "\n=========================\n";
+	for (size_t i = 0; i < 5; i++)
+	{
+		for (size_t j = 0; j < 5; j++)
+			std::cout << this->movementArea[i][j] << " ";
+		std::cout << "\n";
+	}
+}
+
+void Player::clearMovementArea()
+{
+	for (size_t i = 0; i < 5; i++)
+		for (size_t j = 0; j < 5; j++)
+			this->movementArea[i][j] = 0;
+}
+
 // Getters / setters
 void Player::setScore(int score)
 {
@@ -169,7 +187,45 @@ void Player::setScore(int score)
 
 void Player::setHp(int hp)
 {
-	this->hp += hp;
+	if (this->sword > 0)
+	{
+		int attack = this->sword;
+		if (this->sword >= hp)
+		{
+			this->sword -= hp;
+			hp -= attack;
+		}
+		else
+		{
+			this->sword = 0;
+			hp -= attack;
+		}
+
+	}
+
+	if (hp > 0)
+	{
+		if (this->shield > 0)
+		{
+			int attack2 = this->shield;
+			if (this->shield >= hp)
+			{
+				this->shield -= hp;
+				hp -= attack2;
+			}
+			else
+			{
+				this->shield = 0;
+				hp -= attack2;
+			}		
+		}
+	}
+
+	if (hp > 0)
+	{
+		this->hp -= hp;
+	}
+
 }
 
 void Player::setCoin(int coin)
@@ -192,24 +248,6 @@ int Player::getSword()
 int Player::getShield()
 {
 	return this->shield;
-}
-
-void Player::showMovementArea()
-{
-	std::cout << "\n=========================\n";
-	for (size_t i = 0; i < 5; i++)
-	{
-		for (size_t j = 0; j < 5; j++)
-			std::cout << this->movementArea[i][j] << " ";
-		std::cout << "\n";
-	}
-}
-
-void Player::clearMovementArea()
-{
-	for (size_t i = 0; i < 5; i++)
-		for (size_t j = 0; j < 5; j++)
-			this->movementArea[i][j] = 0;
 }
 
 int Player::getLvl()
