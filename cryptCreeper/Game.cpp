@@ -1,10 +1,16 @@
 #include "Game.h"
 
+//Set width, height screen, app icon, view 
 void Game::initWindow()
 {
-	this->videoMode = sf::VideoMode(1000, 1300);
+	this->videoMode = sf::VideoMode(1600, 1300);
 	this->window = new sf::RenderWindow(this->videoMode, "Crypt Creeper", sf::Style::Resize | sf::Style::Close);
+	this->view.setSize(1600, 1300);
+	this->view.move(sf::Vector2f(-30.f, 150.f));
+	this->icon.loadFromFile("Sprites/icon.png");
+	this->window->setView(this->view);
 	this->window->setFramerateLimit(60);
+	this->window->setIcon(this->icon.getSize().x, this->icon.getSize().y, this->icon.getPixelsPtr());
 }
 
 Game::Game()
@@ -19,6 +25,7 @@ Game::~Game()
 	delete this->area;
 }
 
+//Window interaction, Escape button
 void Game::pollEvents()
 {
 	while (this->window->pollEvent(this->event))
@@ -52,9 +59,12 @@ void Game::update()
 
 void Game::render()
 {
-	this->window->clear();
+	//Clear screen and set blue background color
+	this->window->clear(sf::Color(3, 3, 28));
 
+	//Render all of the objects
 	this->area->render(*this->window);
 
+	//Display it
 	this->window->display();
 }

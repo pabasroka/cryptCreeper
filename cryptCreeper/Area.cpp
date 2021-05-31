@@ -137,6 +137,8 @@ void Area::update(sf::RenderWindow& target)
 
 	int scoreDrop = rand() % this->player.getLvl() * 50 + this->player.getLvl() * 20;
 
+	this->portal->animation();
+
 	for (size_t i = 0; i < this->enemies.size(); i++)
 	{
 		this->enemies[i]->update();

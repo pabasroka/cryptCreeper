@@ -6,6 +6,7 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 
+//Base class contains: position, texture, initFunction, render
 class Object
 {
 protected:

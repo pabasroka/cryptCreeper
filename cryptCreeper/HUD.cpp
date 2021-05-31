@@ -13,7 +13,7 @@ void HUD::initVariable()
 	this->shield.setTexture(this->texture);
 	this->heart.setTexture(this->texture);
 	this->coin.setTexture(this->texture);
-	this->rectSize = 48;
+	this->rectSize = 16;
 }
 
 void HUD::initHUD()
@@ -22,7 +22,6 @@ void HUD::initHUD()
 	this->background.setSize(sf::Vector2f(1000.f, 300.f));
 	this->background.setFillColor(sf::Color(3, 3, 28));
 	this->background.setPosition(sf::Vector2f(0.f, 1000.f));
-
 
 	//Sprites
 	this->sword.setTextureRect(sf::IntRect(0 * this->rectSize, 1 * this->rectSize,
@@ -34,10 +33,10 @@ void HUD::initHUD()
 	this->coin.setTextureRect(sf::IntRect(0 * this->rectSize, 4 * this->rectSize,
 		this->rectSize, this->rectSize));
 
-	this->sword.setScale(sf::Vector2f(3.f, 3.f));
-	this->shield.setScale(sf::Vector2f(3.f, 3.f));
-	this->heart.setScale(sf::Vector2f(2.f, 2.f));
-	this->coin.setScale(sf::Vector2f(3.f, 3.f));
+	this->sword.setScale(sf::Vector2f(8.f, 8.f));
+	this->shield.setScale(sf::Vector2f(8.f, 8.f));
+	this->heart.setScale(sf::Vector2f(8.f, 8.f));
+	this->coin.setScale(sf::Vector2f(8.f, 8.f));
 
 	this->heart.setPosition(sf::Vector2f(20.f, 1020.f));
 	this->sword.setPosition(sf::Vector2f(120.f, 1150.f));
@@ -48,7 +47,7 @@ void HUD::initHUD()
 	//Text
 	this->swordText.setCharacterSize(120);
 	this->swordText.setPosition(sf::Vector2f(20.f, 1150.f));
-	this->swordText.setFillColor(sf::Color::Blue);
+	this->swordText.setFillColor(sf::Color::White);
 	this->swordText.setOutlineColor(sf::Color::Black);
 	this->swordText.setOutlineThickness(8.f);
 
@@ -59,7 +58,6 @@ void HUD::initHUD()
 	this->coinText.setPosition(sf::Vector2f(680.f, 1150.f));	
 
 	this->scoreText = this->swordText;
-	this->scoreText.setFillColor(sf::Color::Cyan);
 	this->scoreText.setCharacterSize(80);
 	this->scoreText.setPosition(sf::Vector2f(600.f, 1020.f));
 }

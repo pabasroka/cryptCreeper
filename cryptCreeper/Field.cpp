@@ -51,14 +51,14 @@ void Field::initField(int lvl)
 	*/
 
 	//Field text
-	this->text.setCharacterSize(40);
+	/*this->text.setCharacterSize(40);
 	this->text.setPosition(sf::Vector2f(this->xPos + 10, this->yPos + 5));
 	this->text.setFillColor(sf::Color::White);
 	this->text.setOutlineColor(sf::Color::Black);
-	this->text.setOutlineThickness(1.f);
+	this->text.setOutlineThickness(1.f);*/
 
 	//this->text.setString(std::to_string(getCounter()));
-	this->text.setString(std::to_string(xPos) + ":" + std::to_string(yPos));
+	//this->text.setString(std::to_string(xPos) + ":" + std::to_string(yPos));
 }
 
 Field::Field(int xPos, int yPos, int size, int lvl)
@@ -92,5 +92,5 @@ void Field::render(sf::RenderTarget& target)
 {
 	//target.draw(this->field);
 	target.draw(this->sprite);
-	target.draw(this->text);
+	//target.draw(this->text);
 }

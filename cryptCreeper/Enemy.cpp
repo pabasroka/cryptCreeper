@@ -9,24 +9,8 @@ void Enemy::initVariables(int posX, int posY, int power)
 	this->power = power;
 	this->frame = 0;
 
-	switch (this->power)
-	{
-	case 1:
-		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize + 3 * this->rectSize,
-			0 * this->rectSize, this->rectSize, this->rectSize));
-		break;
-	case 2:
-		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize + 3 * this->rectSize,
-			0 * this->rectSize, this->rectSize, this->rectSize));
-		break;
-	default:
-		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize + 3 * this->rectSize,
-			0 * this->rectSize, this->rectSize, this->rectSize));
-		break;
-	}
-
-
-	this->sprite.setScale(sf::Vector2f(4.f, 4.f));
+	this->sprite.setScale(sf::Vector2f(10.f, 10.f));
+	this->sprite.setPosition(this->posX + 24, this->posY + 12);
 
 	this->timerMax = 15;
 	this->timer = this->timerMax;
@@ -35,12 +19,13 @@ void Enemy::initVariables(int posX, int posY, int power)
 	//Field text
 	this->text.setCharacterSize(120);
 	this->text.setPosition(sf::Vector2f(this->posX + 0, this->posY + 2 * this->rectSize));
-	this->text.setFillColor(sf::Color::Yellow);
+	this->text.setFillColor(sf::Color::Red);
 	this->text.setOutlineColor(sf::Color::Black);
 	this->text.setOutlineThickness(8.f);
 	this->text.setString(std::to_string(this->power));
 }
 
+//Change enemy sprite every few seconds
 void Enemy::animation()
 {
 	if (this->timer <= this->timerMax)
@@ -63,8 +48,8 @@ void Enemy::animation()
 			break;
 		}
 
-		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize + 3 * this->rectSize,
-			this->frame * this->rectSize, this->rectSize, this->rectSize));
+		this->sprite.setTextureRect(sf::IntRect(4 * this->rectSize + this->power * 16,
+			this->frame * this->rectSize / 3, this->rectSize / 3, this->rectSize / 3));
 	}
 }
 

@@ -3,8 +3,9 @@
 void Sword::initVariables(int posX, int posY)
 {
 	this->sprite.setTextureRect(sf::IntRect(0 * this->rectSize,
-		1 * this->rectSize, this->rectSize, this->rectSize));
-	this->sprite.setScale(sf::Vector2f(4.f, 4.f));
+		1 * this->rectSize / 3, this->rectSize / 3, this->rectSize / 3));
+	this->sprite.setPosition(this->posX + 24, this->posY + 12);
+	this->sprite.setScale(sf::Vector2f(10.f, 10.f));
 
 	this->dmg = 1;
 }
