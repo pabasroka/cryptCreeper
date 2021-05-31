@@ -12,15 +12,15 @@ void Enemy::initVariables(int posX, int posY, int power)
 	switch (this->power)
 	{
 	case 1:
-		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize,
+		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize + 3 * this->rectSize,
 			0 * this->rectSize, this->rectSize, this->rectSize));
 		break;
 	case 2:
-		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize,
+		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize + 3 * this->rectSize,
 			0 * this->rectSize, this->rectSize, this->rectSize));
 		break;
 	default:
-		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize,
+		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize + 3 * this->rectSize,
 			0 * this->rectSize, this->rectSize, this->rectSize));
 		break;
 	}
@@ -28,7 +28,7 @@ void Enemy::initVariables(int posX, int posY, int power)
 
 	this->sprite.setScale(sf::Vector2f(4.f, 4.f));
 
-	this->timerMax = 50;
+	this->timerMax = 15;
 	this->timer = this->timerMax;
 	
 
@@ -46,7 +46,7 @@ void Enemy::animation()
 	if (this->timer <= this->timerMax)
 		this->timer++;
 
-	if (this->timer >= 50)
+	if (this->timer >= 15)
 	{
 		this->timer = 0;
 
@@ -63,7 +63,7 @@ void Enemy::animation()
 			break;
 		}
 
-		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize,
+		this->sprite.setTextureRect(sf::IntRect(this->power * this->rectSize + 3 * this->rectSize,
 			this->frame * this->rectSize, this->rectSize, this->rectSize));
 	}
 }

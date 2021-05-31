@@ -2,15 +2,6 @@
 
 void Area::initFirstArea()
 {
-	for (size_t i = 0; i < 5; i++)
-	{
-		for (size_t j = 0; j < 5; j++)
-		{
-			//create fields
-			fields.push_back(new Field(i * 200, j * 200, 200));
-		}
-	}
-
 	this->initNewArea();
 	
 	this->timerMax = 5;
@@ -25,6 +16,9 @@ void Area::initNewArea()
 	{
 		for (size_t j = 0; j < 5; j++)
 		{
+			//create fields
+			fields.push_back(new Field(i * 200, j * 200, 200, this->player.getLvl()));
+
 			// create portal in first row 
 			if (j == 0 && i == portalPos)
 				portal = new Portal(i * 200, j * 200);
@@ -136,6 +130,7 @@ void Area::update(sf::RenderWindow& target)
 		this->coins.clear();
 		this->shields.clear();
 		this->swords.clear();
+		this->fields.clear();
 		this->player.nextAreaSettings();
 		this->initNewArea();
 	}
