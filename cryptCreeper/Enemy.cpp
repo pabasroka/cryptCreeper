@@ -48,8 +48,12 @@ void Enemy::animation()
 			break;
 		}
 
-		this->sprite.setTextureRect(sf::IntRect(4 * this->rectSize + this->power * 16,
-			this->frame * this->rectSize / 3, this->rectSize / 3, this->rectSize / 3));
+		if (this->power >= 9)
+			this->sprite.setTextureRect(sf::IntRect(4 * this->rectSize + 7 * 16,
+				this->frame * this->rectSize / 3, this->rectSize / 3, this->rectSize / 3));
+		else
+			this->sprite.setTextureRect(sf::IntRect(4 * this->rectSize + this->power * 16,
+				this->frame * this->rectSize / 3, this->rectSize / 3, this->rectSize / 3));
 	}
 }
 

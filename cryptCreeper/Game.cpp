@@ -3,9 +3,9 @@
 //Set width, height screen, app icon, view 
 void Game::initWindow()
 {
-	this->videoMode = sf::VideoMode(1600, 1300);
+	this->videoMode = sf::VideoMode(1900, 1600);
 	this->window = new sf::RenderWindow(this->videoMode, "Crypt Creeper", sf::Style::Resize | sf::Style::Close);
-	this->view.setSize(1600, 1300);
+	this->view.setSize(1900, 1600);
 	this->view.move(sf::Vector2f(-30.f, 150.f));
 	this->icon.loadFromFile("Sprites/icon.png");
 	this->window->setView(this->view);
@@ -29,8 +29,8 @@ void Game::initGameOverStuff()
 
 	//Background
 	this->backgroundFog.setFillColor(sf::Color(20, 20, 20, 220));
-	this->backgroundFog.setPosition(sf::Vector2f(-400.f, 0.f));
-	this->backgroundFog.setSize(sf::Vector2f(1800, 1300));
+	this->backgroundFog.setPosition(sf::Vector2f(-500.f, -300.f));
+	this->backgroundFog.setSize(sf::Vector2f(2000, 2000));
 }
 
 void Game::reset()

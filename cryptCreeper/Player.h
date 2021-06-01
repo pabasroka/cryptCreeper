@@ -18,7 +18,9 @@ class Player : public Object
 	int movementTimerMax;
 	
 	void initVariables(int posX, int posY);
-	void move();
+	void move(sf::RenderWindow& target);
+	void moveKeyboard();
+	void moveMouse(sf::RenderWindow& target);
 	bool isAnyLegitMove();
 	friend bool isPlayerIntersectSomething(Player& player, Object* object);
 
@@ -51,6 +53,6 @@ public:
 
 	void nextAreaSettings();
 
-	void update();
+	void update(sf::RenderWindow& target);
 };
 

@@ -14,8 +14,6 @@ void Player::initVariables(int posX, int posY)
 	this->shield = 1;
 	this->coin = 0;
 	this->score = 0;
-	this->sprite.setColor(sf::Color(20, 20, 20, 220));
-	//this->sprite.getColor();
 
 	this->nextAreaSettings();
 	
@@ -23,7 +21,7 @@ void Player::initVariables(int posX, int posY)
 	this->movementTimer = this->movementTimerMax;
 }
 
-void Player::move()
+void Player::move(sf::RenderWindow& target)
 {
 	//Player can move up, down, right, left but cant go back
 	if (this->movementTimer < this->movementTimerMax)
@@ -33,30 +31,8 @@ void Player::move()
 	{
 		if (this->movementTimer >= this->movementTimerMax)
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && this->posX > 0
-				&& this->movementArea[this->currentPos.x][this->currentPos.y - 1] == 0)
-			{
-				this->posX -= 200;
-				this->currentPos.y--;
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->posX < 800
-				&& this->movementArea[this->currentPos.x][this->currentPos.y + 1] == 0)
-			{
-				this->posX += 200;
-				this->currentPos.y++;
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && this->posY > 0
-				&& this->movementArea[this->currentPos.x - 1][this->currentPos.y] == 0)
-			{
-				this->posY -= 200;
-				this->currentPos.x--;
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && this->posY < 800
-				&& this->movementArea[this->currentPos.x + 1][this->currentPos.y] == 0)
-			{
-				this->posY += 200;
-				this->currentPos.x++;
-			}
+			this->moveKeyboard();
+			this->moveMouse(target);
 
 			this->movementArea[this->currentPos.x][this->currentPos.y] = 1;
 			this->movementTimer = 0;
@@ -65,6 +41,68 @@ void Player::move()
 	else
 	{
 		this->hp = 0;
+	}
+}
+
+void Player::moveKeyboard()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && this->posX > 0
+		&& this->movementArea[this->currentPos.x][this->currentPos.y - 1] == 0)
+	{
+		this->posX -= 200;
+		this->currentPos.y--;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && this->posX < 800
+		&& this->movementArea[this->currentPos.x][this->currentPos.y + 1] == 0)
+	{
+		this->posX += 200;
+		this->currentPos.y++;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && this->posY > 0
+		&& this->movementArea[this->currentPos.x - 1][this->currentPos.y] == 0)
+	{
+		this->posY -= 200;
+		this->currentPos.x--;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && this->posY < 800
+		&& this->movementArea[this->currentPos.x + 1][this->currentPos.y] == 0)
+	{
+		this->posY += 200;
+		this->currentPos.x++;
+	}
+}
+
+void Player::moveMouse(sf::RenderWindow& target)
+{
+	sf::Vector2i pos = sf::Vector2i(sf::Mouse::getPosition(target).x - 480,
+		sf::Mouse::getPosition(target).y - 150);
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		std::cout << pos.x << " : " << pos.y << "\n";
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Left
+		&& pos.x < this->posX && this->posX > 0)
+	{
+		this->posX -= 200;
+		this->currentPos.y--;
+	}
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Right
+		&& pos.x > this->posX && this->posX < 800)
+	{
+		this->posX += 200;
+		this->currentPos.y++;
+	}
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Up
+		&& pos.y < this->posY && this->posY > 0)
+	{
+		this->posY -= 200;
+		this->currentPos.x--;
+	}
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Down
+		&& pos.y > this->posY && this->posY < 800)
+	{
+		this->posY += 200;
+		this->currentPos.x++;
 	}
 }
 
@@ -296,9 +334,9 @@ void Player::setPosition(int posX, int posY)
 	this->posY = posY;
 }
 
-void Player::update()
+void Player::update(sf::RenderWindow& target)
 {
 	this->isDead();
-	this->move();
+	this->move(target);
 	this->sprite.setPosition(this->posX, this->posY);
 }

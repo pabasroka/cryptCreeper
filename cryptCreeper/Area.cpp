@@ -56,7 +56,7 @@ void Area::randomizer(int posX, int posY)
 
 	switch (randomEnemy)
 	{
-	case 1: default:
+	case 0: case 1: 
 		enemies.push_back(new Enemy(posX, posY, 1));
 		break;
 	case 2:
@@ -83,7 +83,7 @@ void Area::randomizer(int posX, int posY)
 	case 9:
 		enemies.push_back(new Enemy(posX, posY, 9));
 		break;
-	case 10:
+	case 10: default:
 		enemies.push_back(new Enemy(posX, posY, 10));
 		break;
 	}
@@ -122,7 +122,7 @@ void Area::update(sf::RenderWindow& target)
 	for (size_t i = 0; i < fields.size(); i++)
 		this->fields[i]->mouseClick(target);
 
-	this->player.update();
+	this->player.update(target);
 
 	//Player entered the portal
 	if (isPlayerIntersectSomething(this->player, this->portal))
