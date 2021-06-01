@@ -124,6 +124,7 @@ void Area::update(sf::RenderWindow& target)
 
 	this->player.update();
 
+	//Player entered the portal
 	if (isPlayerIntersectSomething(this->player, this->portal))
 	{
 		this->enemies.clear();
@@ -146,18 +147,21 @@ void Area::update(sf::RenderWindow& target)
 		{
 			this->player.setScore(scoreDrop);
 			this->player.setHp(this->enemies[i]->getPower());
-			this->enemies.erase(this->enemies.begin() + i);
+			this->enemies.erase(this->enemies.begin() + i); 
 		}
 	}
 
+	//Check if player intersect with sth
 	for (size_t i = 0; i < this->coins.size(); i++)
+	{
+		this->coins[i]->update();
 		if (isPlayerIntersectSomething(this->player, this->coins[i]))
-		{		
+		{
 			this->player.setCoin(1);
 			this->player.setScore(scoreDrop);
 			this->coins.erase(this->coins.begin() + i);
 		}
-
+	}
 	for (size_t i = 0; i < this->swords.size(); i++)
 		if (isPlayerIntersectSomething(this->player, this->swords[i]))
 		{
@@ -165,7 +169,6 @@ void Area::update(sf::RenderWindow& target)
 			this->player.setScore(scoreDrop);
 			this->swords.erase(this->swords.begin() + i);
 		}
-
 	for (size_t i = 0; i < this->shields.size(); i++)
 		if (isPlayerIntersectSomething(this->player, this->shields[i]))
 		{		
@@ -215,15 +218,13 @@ void Area::render(sf::RenderTarget& target)
 	for (size_t i = 0; i < fields.size(); i++)
 		this->fields[i]->render(target);
 
+	//Render objects
 	for (size_t i = 0; i < enemies.size(); i++)
 		this->enemies[i]->render(target);
-
 	for (size_t i = 0; i < coins.size(); i++)
 		this->coins[i]->render(target);
-
 	for (size_t i = 0; i < swords.size(); i++)
 		this->swords[i]->render(target);
-
 	for (size_t i = 0; i < shields.size(); i++)
 		this->shields[i]->render(target);
 
