@@ -10,10 +10,17 @@ class Game
 	sf::View view;
 	sf::Image icon;
 
+	//Game over text
+	sf::Font font;
+	sf::Text gameOverText;
+	sf::RectangleShape backgroundFog;
+
 	//Area includes enemies, items, player etc.. 
 	Area* area;
 
 	void initWindow();
+	void initGameOverStuff();
+	void reset();
 
 public:
 	Game();

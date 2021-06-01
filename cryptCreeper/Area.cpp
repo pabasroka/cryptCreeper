@@ -205,6 +205,8 @@ void Area::update(sf::RenderWindow& target)
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
 			this->player.showMovementArea();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+			this->player.setHp(5);
 	}
 
 }

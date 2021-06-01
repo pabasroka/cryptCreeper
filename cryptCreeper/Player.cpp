@@ -14,6 +14,8 @@ void Player::initVariables(int posX, int posY)
 	this->shield = 1;
 	this->coin = 0;
 	this->score = 0;
+	this->sprite.setColor(sf::Color(20, 20, 20, 220));
+	//this->sprite.getColor();
 
 	this->nextAreaSettings();
 	
@@ -62,7 +64,7 @@ void Player::move()
 	}
 	else
 	{
-		std::cout << "GAME OVER you cant move in any direction \n";
+		this->hp = 0;
 	}
 }
 
