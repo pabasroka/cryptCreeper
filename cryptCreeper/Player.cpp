@@ -81,25 +81,33 @@ void Player::moveMouse(sf::RenderWindow& target)
 		std::cout << pos.x << " : " << pos.y << "\n";
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Left
-		&& pos.x < this->posX && this->posX > 0)
+		&& pos.x < this->posX && this->posX > 0
+		&& pos.y > this->posY && pos.y < this->posY + 200
+		&& this->movementArea[this->currentPos.x][this->currentPos.y - 1] == 0)
 	{
 		this->posX -= 200;
 		this->currentPos.y--;
 	}
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Right
-		&& pos.x > this->posX && this->posX < 800)
+	else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Right
+		&& pos.x > this->posX && this->posX < 800
+		&& pos.y > this->posY && pos.y < this->posY + 200
+		&& this->movementArea[this->currentPos.x][this->currentPos.y + 1] == 0)
 	{
 		this->posX += 200;
 		this->currentPos.y++;
 	}
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Up
-		&& pos.y < this->posY && this->posY > 0)
+	else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Up
+		&& pos.y < this->posY && this->posY > 0
+		&& pos.x > this->posX && pos.x < this->posX + 200
+		&& this->movementArea[this->currentPos.x - 1][this->currentPos.y] == 0)
 	{
 		this->posY -= 200;
 		this->currentPos.x--;
 	}
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Down
-		&& pos.y > this->posY && this->posY < 800)
+	else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Down
+		&& pos.y > this->posY && this->posY < 800
+		&& pos.x > this->posX && pos.x < this->posX + 200
+		&& this->movementArea[this->currentPos.x + 1][this->currentPos.y] == 0)
 	{
 		this->posY += 200;
 		this->currentPos.x++;
