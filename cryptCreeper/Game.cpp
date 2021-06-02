@@ -6,8 +6,9 @@ void Game::initWindow()
 	this->videoMode = sf::VideoMode(1900, 1600);
 	this->window = new sf::RenderWindow(this->videoMode, "Crypt Creeper", sf::Style::Resize | sf::Style::Close);
 	this->view.setSize(1900, 1600);
-	this->view.move(sf::Vector2f(-30.f, 150.f));
-	this->icon.loadFromFile("Sprites/icon.png");
+	this->view.move(sf::Vector2f(0.f, 150.f));
+	if (!this->icon.loadFromFile("Sprites/icon.png"))
+		throw "Could not load icon \n";
 	this->window->setView(this->view);
 	this->window->setFramerateLimit(60);
 	this->window->setIcon(this->icon.getSize().x, this->icon.getSize().y, this->icon.getPixelsPtr());
@@ -33,6 +34,15 @@ void Game::initGameOverStuff()
 	this->backgroundFog.setSize(sf::Vector2f(2000, 2000));
 }
 
+void Game::initCursor()
+{
+	if (!this->cursorTexture.loadFromFile("Sprites/cursor.png"))
+		throw "Could not load cursor \n";
+	this->cursor.setTexture(this->cursorTexture);
+	//this->window->setMouseCursorVisible(false);
+	this->cursor.setScale(sf::Vector2f(5.f, 5.f));
+}
+
 void Game::reset()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
@@ -46,6 +56,7 @@ Game::Game()
 {
 	this->initWindow();
 	this->initGameOverStuff();
+	this->initCursor();
 	this->area = new Area();
 }
 
@@ -84,6 +95,10 @@ void Game::update()
 	if (this->area->endGame())
 		this->area->update(*this->window);
 
+	//Update cursor position
+	this->cursor.setPosition(sf::Mouse::getPosition(*window).x , 
+		sf::Mouse::getPosition(*window).y);
+
 	//We can reset game at any time
 	this->reset();
 }
@@ -100,6 +115,9 @@ void Game::render()
 		this->window->draw(this->backgroundFog);
 		this->window->draw(this->gameOverText);
 	}
+
+	//Render custom cursor
+	this->window->draw(this->cursor);
 
 	//Display it
 	this->window->display();

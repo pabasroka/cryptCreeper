@@ -119,9 +119,6 @@ void Area::update(sf::RenderWindow& target)
 {
 	this->endGame();
 
-	for (size_t i = 0; i < fields.size(); i++)
-		this->fields[i]->mouseClick(target);
-
 	this->player.update(target);
 
 	//Player entered the portal
@@ -132,6 +129,7 @@ void Area::update(sf::RenderWindow& target)
 		this->shields.clear();
 		this->swords.clear();
 		this->fields.clear();
+
 		this->player.nextAreaSettings();
 		this->initNewArea();
 	}

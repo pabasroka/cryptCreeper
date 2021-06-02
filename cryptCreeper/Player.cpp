@@ -10,7 +10,7 @@ void Player::initVariables(int posX, int posY)
 
 	this->lvl = 1;
 	this->hp = 3;
-	this->sword = 1;
+	this->sword = 200;
 	this->shield = 1;
 	this->coin = 0;
 	this->score = 0;
@@ -39,9 +39,7 @@ void Player::move(sf::RenderWindow& target)
 		}
 	}
 	else
-	{
 		this->hp = 0;
-	}
 }
 
 void Player::moveKeyboard()
@@ -80,7 +78,11 @@ void Player::moveMouse(sf::RenderWindow& target)
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		std::cout << pos.x << " : " << pos.y << "\n";
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Left
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Center
+		&& pos.x > this->posX && pos.x < this->posX + 200
+		&& pos.y > this->posY && pos.y < this->posY + 200)
+		return;
+	else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Left
 		&& pos.x < this->posX && this->posX > 0
 		&& pos.y > this->posY && pos.y < this->posY + 200
 		&& this->movementArea[this->currentPos.x][this->currentPos.y - 1] == 0)

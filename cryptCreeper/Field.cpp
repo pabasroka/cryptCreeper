@@ -1,8 +1,6 @@
 #include "Field.h"
 
-int Field::counter = 0;
-
-void Field::initVariables(int xPos, int yPos, int size)
+void Field::initVariables(int xPos, int yPos)
 {
 	if (!this->font.loadFromFile("Fonts/AncientModernTales-a7Po.ttf"))
 		std::cout << "Could not load font \n";
@@ -15,7 +13,6 @@ void Field::initVariables(int xPos, int yPos, int size)
 
 	this->xPos = xPos;
 	this->yPos = yPos;
-	this->size = size;
 }
 
 void Field::initField(int lvl)
@@ -24,13 +21,13 @@ void Field::initField(int lvl)
 	int typeOfFields{};
 	switch (lvl)
 	{
-	case 0: case 1: case 2: case 3:
+	case 0: case 1: case 2: case 3: case 4:
 		typeOfFields = 1;
 		break;
-	case 4: case 5: case 6:
+	case 5: case 6: case 7: case 8:
 		typeOfFields = 2;
 		break;
-	case 7: 
+	case 9: 
 		typeOfFields = 3;
 		break;
 	default:
@@ -51,20 +48,19 @@ void Field::initField(int lvl)
 	*/
 
 	//Field text
-	this->text.setCharacterSize(40);
+	/*this->text.setCharacterSize(40);
 	this->text.setPosition(sf::Vector2f(this->xPos + 10, this->yPos + 5));
 	this->text.setFillColor(sf::Color::White);
 	this->text.setOutlineColor(sf::Color::Black);
-	this->text.setOutlineThickness(1.f);
+	this->text.setOutlineThickness(1.f);*/
 
 	//this->text.setString(std::to_string(getCounter()));
-	this->text.setString(std::to_string(xPos) + ":" + std::to_string(yPos));
+	//this->text.setString(std::to_string(xPos) + ":" + std::to_string(yPos));
 }
 
 Field::Field(int xPos, int yPos, int size, int lvl)
 {
-	counter++;
-	this->initVariables(xPos, yPos, size);
+	this->initVariables(xPos, yPos);
 	this->initField(lvl);
 }
 
@@ -72,25 +68,9 @@ Field::~Field()
 {
 }
 
-void Field::mouseClick(sf::RenderWindow& target)
-{
-	//std::cout << "x: " << sf::Mouse::getPosition(target).x << "y: " << sf::Mouse::getPosition(target).y << "\n";
-	sf::Vector2i mousePos = sf::Mouse::getPosition(target);
-
-	if (mousePos.x < this->xPos + size && mousePos.x > this->xPos
-		&& mousePos.y < this->yPos + size && mousePos.y > this->yPos)
-		;
-		//std::cout << "field[" << xPos << "][" << yPos << "] \n";
-}
-
-int Field::getCounter()
-{
-	return counter;
-}
-
 void Field::render(sf::RenderTarget& target)
 {
 	//target.draw(this->field);
 	target.draw(this->sprite);
-	target.draw(this->text);
+	//target.draw(this->text);
 }

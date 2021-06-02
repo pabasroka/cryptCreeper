@@ -9,8 +9,6 @@
 
 class Field
 {
-	static int counter;
-
 	//Sprites
 	int rectSize;
 	sf::Texture texture;
@@ -23,16 +21,12 @@ class Field
 	sf::Font font;
 	sf::Text text;
 
-	void initVariables(int xPos, int yPos, int size = 50);
+	void initVariables(int xPos, int yPos);
 	void initField(int lvl);
 
 public:
 	Field(int xPos, int yPos, int size = 50, int lvl = 1);
 	virtual ~Field();
-
-	void mouseClick(sf::RenderWindow& target);
-
-	static int getCounter();
 
 	void render(sf::RenderTarget& target);
 };

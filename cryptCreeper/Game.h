@@ -18,8 +18,16 @@ class Game
 	//Area includes enemies, items, player etc.. 
 	Area* area;
 
+	//States
+	int state;
+
+	//Cursor
+	sf::Texture cursorTexture;
+	sf::Sprite cursor;
+
 	void initWindow();
 	void initGameOverStuff();
+	void initCursor();
 	void reset();
 
 public:
