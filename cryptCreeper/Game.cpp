@@ -4,7 +4,7 @@
 void Game::initWindow()
 {
 	this->videoMode = sf::VideoMode(1900, 1600);
-	this->window = new sf::RenderWindow(this->videoMode, "Crypt Creeper", sf::Style::Resize | sf::Style::Close);
+	this->window = new sf::RenderWindow(this->videoMode, "Crypt Creeper", sf::Style::Close);
 	this->view.setSize(1900, 1600);
 	this->view.move(sf::Vector2f(0.f, 150.f));
 	if (!this->icon.loadFromFile("Sprites/icon.png"))
@@ -12,6 +12,8 @@ void Game::initWindow()
 	this->window->setView(this->view);
 	this->window->setFramerateLimit(60);
 	this->window->setIcon(this->icon.getSize().x, this->icon.getSize().y, this->icon.getPixelsPtr());
+
+	this->state = State::mainMenu;
 }
 
 void Game::initGameOverStuff()
@@ -39,7 +41,7 @@ void Game::initCursor()
 	if (!this->cursorTexture.loadFromFile("Sprites/cursor.png"))
 		throw "Could not load cursor \n";
 	this->cursor.setTexture(this->cursorTexture);
-	//this->window->setMouseCursorVisible(false);
+	this->window->setMouseCursorVisible(false);
 	this->cursor.setScale(sf::Vector2f(5.f, 5.f));
 }
 
@@ -49,6 +51,7 @@ void Game::reset()
 	{
 		delete this->area;
 		this->area = new Area();
+		this->state = State::area;
 	}
 }
 
@@ -58,12 +61,14 @@ Game::Game()
 	this->initGameOverStuff();
 	this->initCursor();
 	this->area = new Area();
+	this->mainMenu = new MainMenu();
 }
 
 Game::~Game()
 {
 	delete this->window;
 	delete this->area;
+	delete this->mainMenu;
 }
 
 //Window interaction, Escape button
@@ -95,9 +100,12 @@ void Game::update()
 	if (this->area->endGame())
 		this->area->update(*this->window);
 
+	//Update state
+	this->mainMenu->update(*this->window, this->state);
+
 	//Update cursor position
-	this->cursor.setPosition(sf::Mouse::getPosition(*window).x , 
-		sf::Mouse::getPosition(*window).y);
+	this->cursor.setPosition(sf::Mouse::getPosition(*window).x - 450, 
+		sf::Mouse::getPosition(*window).y - 150);
 
 	//We can reset game at any time
 	this->reset();
@@ -108,13 +116,35 @@ void Game::render()
 	//Clear screen and set blue background color
 	this->window->clear(sf::Color(3, 3, 28));
 
-	//Render all of the objects
+	if (!this->area->endGame())
+		this->state = State::gameOver;
+
+	switch (this->state)
+	{
+	case State::mainMenu:
+		this->mainMenu->render(*this->window);
+		break;
+	case State::area:
+		//Render all of the objects
+		this->area->render(*this->window);
+		break;
+	case State::info:
+
+		break;
+	case State::gameOver:
+		this->window->draw(this->backgroundFog);
+		this->window->draw(this->gameOverText);
+		break;
+	}
+
+	/*//Render all of the objects
 	this->area->render(*this->window);
 	if (!this->area->endGame())
 	{
 		this->window->draw(this->backgroundFog);
 		this->window->draw(this->gameOverText);
-	}
+	}*/
+
 
 	//Render custom cursor
 	this->window->draw(this->cursor);

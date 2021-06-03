@@ -1,5 +1,6 @@
 #pragma once
 #include "Area.h"
+#include "MainMenu.h"
 
 class Game
 {
@@ -15,11 +16,11 @@ class Game
 	sf::Text gameOverText;
 	sf::RectangleShape backgroundFog;
 
+	State state;
 	//Area includes enemies, items, player etc.. 
 	Area* area;
-
-	//States
-	int state;
+	//Main menu - first screen, that contains start, exit buttons
+	MainMenu* mainMenu;
 
 	//Cursor
 	sf::Texture cursorTexture;

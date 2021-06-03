@@ -46,6 +46,7 @@
     <ClInclude Include="Portal.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="Sword.h" />
+    <ClInclude Include="utilities.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
