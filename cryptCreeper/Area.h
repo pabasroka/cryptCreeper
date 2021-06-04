@@ -32,6 +32,7 @@ public:
 	virtual ~Area();
 
 	bool endGame();
+	int getScore();
 
 	void update(sf::RenderWindow& target);
 	void render(sf::RenderTarget& target);

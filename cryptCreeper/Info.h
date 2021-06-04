@@ -2,27 +2,23 @@
 #include "utilities.h"
 #include <SFML/Graphics.hpp>
 
-class MainMenu
+class Info
 {
-	// Main menu screen
+	//Info screen 
 	sf::RectangleShape background;
-	sf::RectangleShape startGameButton;
-	sf::RectangleShape infoButton;
-	sf::RectangleShape exitButton;
+	sf::RectangleShape goBackButton;
 	sf::Texture texture;
 	sf::Sprite sprite;
 	sf::Font font;
-	sf::Text startGameText;
-	sf::Text infoText;
-	sf::Text exitText;
+	sf::Text goBackText;
 
 	void initVariables();
-	void initMainMenu();
+	void initInfo();
 	void buttonsClick(sf::RenderWindow& target, State& state);
 
 public:
-	MainMenu();
-	virtual ~MainMenu();
+	Info();
+	virtual ~Info();
 
 	void update(sf::RenderWindow& target, State& state);
 	void render(sf::RenderTarget& target);

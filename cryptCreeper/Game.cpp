@@ -27,8 +27,9 @@ void Game::initGameOverStuff()
 	this->gameOverText.setFillColor(sf::Color::White);
 	this->gameOverText.setOutlineColor(sf::Color::Black);
 	this->gameOverText.setOutlineThickness(10.f);
-	this->gameOverText.setPosition(40, 200);
-	this->gameOverText.setString("GAME   OVER ! \n\n    Press R \n     to restart !");
+	this->gameOverText.setPosition(20, 200);
+	this->gameOverText.setString("GAME   OVER ! \n\nScore: " + std::to_string(this->area->getScore()) 
+		+ "\n\nPress R \n     to restart !");
 
 	//Background
 	this->backgroundFog.setFillColor(sf::Color(20, 20, 20, 220));
@@ -62,6 +63,7 @@ Game::Game()
 	this->initCursor();
 	this->area = new Area();
 	this->mainMenu = new MainMenu();
+	this->info = new Info();
 }
 
 Game::~Game()
@@ -69,6 +71,7 @@ Game::~Game()
 	delete this->window;
 	delete this->area;
 	delete this->mainMenu;
+	delete this->info;
 }
 
 //Window interaction, Escape button
@@ -101,7 +104,10 @@ void Game::update()
 		this->area->update(*this->window);
 
 	//Update state
-	this->mainMenu->update(*this->window, this->state);
+	if (state == State::mainMenu)
+		this->mainMenu->update(*this->window, this->state);
+	if (state == State::info)
+	this->info->update(*this->window, this->state);
 
 	//Update cursor position
 	this->cursor.setPosition(sf::Mouse::getPosition(*window).x - 450, 
@@ -129,22 +135,16 @@ void Game::render()
 		this->area->render(*this->window);
 		break;
 	case State::info:
-
+		this->info->render(*this->window);
 		break;
 	case State::gameOver:
 		this->window->draw(this->backgroundFog);
 		this->window->draw(this->gameOverText);
 		break;
+	case State::exit:
+		this->window->close();
+		break;
 	}
-
-	/*//Render all of the objects
-	this->area->render(*this->window);
-	if (!this->area->endGame())
-	{
-		this->window->draw(this->backgroundFog);
-		this->window->draw(this->gameOverText);
-	}*/
-
 
 	//Render custom cursor
 	this->window->draw(this->cursor);

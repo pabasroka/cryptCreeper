@@ -25,6 +25,7 @@
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Info.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="Field.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="Info.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
