@@ -118,7 +118,6 @@ bool Area::endGame()
 int Area::getScore()
 {
 	return 0;
-	//return this->player.getScore();
 }
 
 void Area::update(sf::RenderWindow& target)

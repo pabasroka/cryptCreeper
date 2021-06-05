@@ -1,6 +1,8 @@
 #pragma once
 #include "utilities.h"
 #include <SFML/Graphics.hpp>
+#include <chrono>
+#include <thread>
 
 class MainMenu
 {
@@ -12,6 +14,7 @@ class MainMenu
 	sf::Texture texture;
 	sf::Sprite sprite;
 	sf::Font font;
+	sf::Text titleText;
 	sf::Text startGameText;
 	sf::Text infoText;
 	sf::Text exitText;
@@ -19,6 +22,7 @@ class MainMenu
 	void initVariables();
 	void initMainMenu();
 	void buttonsClick(sf::RenderWindow& target, State& state);
+	void buttonsHover(sf::RenderWindow& target);
 
 public:
 	MainMenu();

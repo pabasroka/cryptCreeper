@@ -8,7 +8,7 @@ void MainMenu::initVariables()
 	this->infoText = this->startGameText;
 	this->exitText = this->startGameText;
 
-	if (!this->texture.loadFromFile("Sprites/sprites.png"))
+	if (!this->texture.loadFromFile("Sprites/mainMenuSprite.png"))
 		throw "Could not load textures \n";
 	this->sprite.setTexture(this->texture);
 }
@@ -19,18 +19,22 @@ void MainMenu::initMainMenu()
 	this->background.setFillColor(sf::Color(3, 3, 28));
 	this->background.setSize(sf::Vector2f(1900, 1600));
 
+	//Sprite
+	this->sprite.setPosition(sf::Vector2f(650, 75));
+	this->sprite.setScale(sf::Vector2f(8.f, 8.f));
+
 	//Buttons
 	this->startGameButton.setFillColor(sf::Color::Blue);
-	this->startGameButton.setOutlineColor(sf::Color::Green);
+	this->startGameButton.setOutlineColor(sf::Color(251, 133, 0));
 	this->startGameButton.setOutlineThickness(10.f);
 	this->startGameButton.setSize(sf::Vector2f(400.f, 200.f));
-	this->startGameButton.setPosition(sf::Vector2f(300, 50));
+	this->startGameButton.setPosition(sf::Vector2f(300, 400));
 
 	this->infoButton = this->startGameButton;
-	this->infoButton.setPosition(sf::Vector2f(300, 550));
+	this->infoButton.setPosition(sf::Vector2f(300, 800));
 
 	this->exitButton = this->startGameButton;
-	this->exitButton.setPosition(sf::Vector2f(300, 1050));
+	this->exitButton.setPosition(sf::Vector2f(300.f, 1200.f));
 
 	//Text
 	this->startGameText.setCharacterSize(100);
@@ -43,13 +47,18 @@ void MainMenu::initMainMenu()
 
 	this->infoText = this->startGameText;
 	this->infoText.setString("Info");
-	this->infoText.setPosition(sf::Vector2f(this->infoButton.getPosition().x + 40,
+	this->infoText.setPosition(sf::Vector2f(this->infoButton.getPosition().x + 100,
 		this->infoButton.getPosition().y + 30));
 
 	this->exitText = this->startGameText;
 	this->exitText.setString("Exit");
-	this->exitText.setPosition(sf::Vector2f(this->exitButton.getPosition().x + 40,
+	this->exitText.setPosition(sf::Vector2f(this->exitButton.getPosition().x + 100,
 		this->exitButton.getPosition().y + 30));
+
+	this->titleText = this->startGameText;
+	this->titleText.setCharacterSize(120);
+	this->titleText.setPosition(sf::Vector2f(200, 0));
+	this->titleText.setString("Crypt Creeper");
 }
 
 void MainMenu::buttonsClick(sf::RenderWindow& target, State& state)
@@ -63,7 +72,10 @@ void MainMenu::buttonsClick(sf::RenderWindow& target, State& state)
 		&& pos.x < this->startGameButton.getPosition().x + this->startGameButton.getSize().x
 		&& pos.y > this->startGameButton.getPosition().y
 		&& pos.y < this->startGameButton.getPosition().y + this->startGameButton.getSize().y)
+	{
 		state = State::area;
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	}
 
 	//Game info
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)
@@ -82,6 +94,57 @@ void MainMenu::buttonsClick(sf::RenderWindow& target, State& state)
 		state = State::exit;
 }
 
+void MainMenu::buttonsHover(sf::RenderWindow& target)
+{
+	sf::Vector2i pos = sf::Vector2i(sf::Mouse::getPosition(target).x - 480,
+		sf::Mouse::getPosition(target).y - 150);
+
+	//Start game
+	if (pos.x > this->startGameButton.getPosition().x
+		&& pos.x < this->startGameButton.getPosition().x + this->startGameButton.getSize().x
+		&& pos.y > this->startGameButton.getPosition().y
+		&& pos.y < this->startGameButton.getPosition().y + this->startGameButton.getSize().y)
+	{
+		this->startGameButton.setFillColor(sf::Color::Red);
+		this->startGameButton.setOutlineColor(sf::Color(251, 233, 120));
+	}
+	else
+	{
+		this->startGameButton.setFillColor(sf::Color::Blue);
+		this->startGameButton.setOutlineColor(sf::Color(251, 133, 0));
+	}
+
+	//Game info
+	if (pos.x > this->infoButton.getPosition().x
+		&& pos.x < this->infoButton.getPosition().x + this->infoButton.getSize().x
+		&& pos.y > this->infoButton.getPosition().y
+		&& pos.y < this->infoButton.getPosition().y + this->infoButton.getSize().y)
+	{
+		this->infoButton.setFillColor(sf::Color::Red);
+		this->infoButton.setOutlineColor(sf::Color(251, 233, 120));
+	}
+	else
+	{
+		this->infoButton.setFillColor(sf::Color::Blue);
+		this->infoButton.setOutlineColor(sf::Color(251, 133, 0));
+	}
+
+	//Exit 
+	if (pos.x > this->exitButton.getPosition().x
+		&& pos.x < this->exitButton.getPosition().x + this->exitButton.getSize().x
+		&& pos.y > this->exitButton.getPosition().y
+		&& pos.y < this->exitButton.getPosition().y + this->exitButton.getSize().y)
+	{
+		this->exitButton.setFillColor(sf::Color::Red);
+		this->exitButton.setOutlineColor(sf::Color(251, 233, 120));
+	}
+	else
+	{
+		this->exitButton.setFillColor(sf::Color::Blue);
+		this->exitButton.setOutlineColor(sf::Color(251, 133, 0));
+	}
+}
+
 MainMenu::MainMenu()
 {
 	this->initVariables();
@@ -94,15 +157,18 @@ MainMenu::~MainMenu()
 
 void MainMenu::update(sf::RenderWindow& target, State& state)
 {
+	this->buttonsHover(target);
 	this->buttonsClick(target, state);
 }
 
 void MainMenu::render(sf::RenderTarget& target)
 {
 	target.draw(this->background);
+	target.draw(this->sprite);
 	target.draw(this->startGameButton);
 	target.draw(this->infoButton);
 	target.draw(this->exitButton);
+	target.draw(this->titleText);
 	target.draw(this->startGameText);
 	target.draw(this->infoText);
 	target.draw(this->exitText);

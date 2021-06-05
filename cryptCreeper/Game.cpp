@@ -27,7 +27,7 @@ void Game::initGameOverStuff()
 	this->gameOverText.setFillColor(sf::Color::White);
 	this->gameOverText.setOutlineColor(sf::Color::Black);
 	this->gameOverText.setOutlineThickness(10.f);
-	this->gameOverText.setPosition(20, 200);
+	this->gameOverText.setPosition(20, 0);
 	this->gameOverText.setString("GAME   OVER ! \n\nScore: " + std::to_string(this->area->getScore()) 
 		+ "\n\nPress R \n     to restart !");
 
@@ -86,7 +86,11 @@ void Game::pollEvents()
 			break;
 		case sf::Event::KeyPressed:
 			if (this->event.key.code == sf::Keyboard::Escape)
-				this->window->close();
+			{
+				this->state = State::mainMenu;
+				delete this->area;
+				this->area = new Area();
+			}
 			break;
 		}
 	}
@@ -107,7 +111,7 @@ void Game::update()
 	if (state == State::mainMenu)
 		this->mainMenu->update(*this->window, this->state);
 	if (state == State::info)
-	this->info->update(*this->window, this->state);
+		this->info->update(*this->window, this->state);
 
 	//Update cursor position
 	this->cursor.setPosition(sf::Mouse::getPosition(*window).x - 450, 
@@ -132,12 +136,14 @@ void Game::render()
 		break;
 	case State::area:
 		//Render all of the objects
+		
 		this->area->render(*this->window);
 		break;
 	case State::info:
 		this->info->render(*this->window);
 		break;
 	case State::gameOver:
+		this->area->render(*this->window);
 		this->window->draw(this->backgroundFog);
 		this->window->draw(this->gameOverText);
 		break;
