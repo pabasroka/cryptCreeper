@@ -6,10 +6,14 @@ void VendorView::initVariables()
 		throw "Could not load font \n";
 	this->item1Text.setFont(this->font);
 
+	if (!this->vendorTexture.loadFromFile("Sprites/vendor.png"))
+		throw "Could not load textures \n";
 	if (!this->texture.loadFromFile("Sprites/sprites.png"))
 		throw "Could not load textures \n";
-	this->vendorSprite.setTexture(this->texture);
+	this->vendorSprite.setTexture(this->vendorTexture);
 	this->item1Sprite.setTexture(this->texture);
+
+	this->rectSize = 16;
 }
 
 void VendorView::initVendor()
@@ -22,6 +26,23 @@ void VendorView::initVendor()
 	this->background.setPosition(sf::Vector2f(100.f, 100.f));
 
 	//Sprites
+	this->vendorSprite.setScale(sf::Vector2f(5.f, 5.f));
+	this->vendorSprite.setPosition(sf::Vector2f(380.f, 100.f));
+
+	this->item1Sprite.setTextureRect(sf::IntRect(0, 1 * this->rectSize, 
+		this->rectSize, this->rectSize));
+	this->item1Sprite.setScale(sf::Vector2f(10.f, 10.f));
+	this->item1Sprite.setPosition(sf::Vector2f(150.f, 500.f));
+
+	this->item2Sprite = this->item1Sprite;
+	this->item2Sprite.setPosition(sf::Vector2f(400.f, 500.f));
+	this->item2Sprite.setTextureRect(sf::IntRect(0, 2 * this->rectSize,
+		this->rectSize, this->rectSize));
+
+	this->item3Sprite = this->item1Sprite;
+	this->item3Sprite.setTextureRect(sf::IntRect(0, 3 * this->rectSize,
+		this->rectSize, this->rectSize));
+	this->item3Sprite.setPosition(sf::Vector2f(680.f, 500.f));
 
 	//Text
 }
@@ -53,4 +74,8 @@ void VendorView::update(sf::RenderWindow& target, State& state)
 void VendorView::render(sf::RenderTarget& target)
 {
 	target.draw(this->background);
+	target.draw(this->vendorSprite);
+	target.draw(this->item1Sprite);
+	target.draw(this->item2Sprite);
+	target.draw(this->item3Sprite);
 }

@@ -5,6 +5,7 @@
 class VendorView
 {
 	//Shop view
+	sf::Texture vendorTexture;
 	sf::Texture texture;
 	sf::Sprite vendorSprite;
 	sf::Sprite item1Sprite;
@@ -16,6 +17,8 @@ class VendorView
 	sf::Text item1Text;
 	sf::Text item2Text;
 	sf::Text item3Text;
+
+	int rectSize;
 
 	void initVariables();
 	void initVendor();
