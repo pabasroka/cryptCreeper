@@ -49,6 +49,8 @@ public:
 	void setScore(int score);
 	void setCoin(int coin);
 	void setPosition(int posX, int posY);
+	void addHp(int hp);
+	void takeDamage(int damage);
 	bool isDead();
 
 	void nextAreaSettings();

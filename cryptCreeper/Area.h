@@ -7,6 +7,7 @@
 #include "Portal.h"
 #include "Sword.h"
 #include "Shield.h"
+#include "Potion.h"
 
 class Area
 {
@@ -15,6 +16,7 @@ class Area
 	std::vector<Coin*> coins;
 	std::vector<Sword*> swords;
 	std::vector<Shield*> shields;
+	std::vector<Potion*> potions;
 	HUD hud;
 	Player player;
 	Portal* portal;

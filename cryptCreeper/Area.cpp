@@ -31,6 +31,14 @@ void Area::initNewArea()
 void Area::randomizer(int posX, int posY)
 {
 	bool condition = (rand() % 100) < 30;
+
+	if (condition)
+	{
+		potions.push_back(new Potion(posX, posY));
+		return;
+	}
+
+	condition = (rand() % 100) < 20;
 	if (condition)
 	{
 		coins.push_back(new Coin(posX, posY));
@@ -133,6 +141,7 @@ void Area::update(sf::RenderWindow& target)
 		this->coins.clear();
 		this->shields.clear();
 		this->swords.clear();
+		this->potions.clear();
 		this->fields.clear();
 
 		this->player.nextAreaSettings();
@@ -149,7 +158,7 @@ void Area::update(sf::RenderWindow& target)
 		if (isPlayerIntersectSomething(this->player, this->enemies[i]))
 		{
 			this->player.setScore(scoreDrop);
-			this->player.setHp(this->enemies[i]->getPower());
+			this->player.takeDamage(this->enemies[i]->getPower());
 			this->enemies.erase(this->enemies.begin() + i); 
 		}
 	}
@@ -178,6 +187,13 @@ void Area::update(sf::RenderWindow& target)
 			this->player.setShield(this->shields[i]->getArmor());
 			this->player.setScore(scoreDrop);
 			this->shields.erase(this->shields.begin() + i);
+		}
+	for (size_t i = 0; i < this->potions.size(); i++)
+		if (isPlayerIntersectSomething(this->player, this->potions[i]))
+		{
+			this->player.addHp(this->potions[i]->getEffect());
+			this->player.setScore(scoreDrop);
+			this->potions.erase(this->potions.begin() + i);
 		}
 
 	// User interface stats text
@@ -208,8 +224,6 @@ void Area::update(sf::RenderWindow& target)
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
 			this->player.showMovementArea();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-			this->player.setHp(5);
 	}
 
 }
@@ -232,6 +246,8 @@ void Area::render(sf::RenderTarget& target)
 		this->swords[i]->render(target);
 	for (size_t i = 0; i < shields.size(); i++)
 		this->shields[i]->render(target);
+	for (size_t i = 0; i < potions.size(); i++)
+		this->potions[i]->render(target);
 
 	this->portal->render(target);
 

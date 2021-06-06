@@ -10,7 +10,7 @@ void Player::initVariables(int posX, int posY)
 
 	this->lvl = 1;
 	this->hp = 3;
-	this->sword = 200;
+	this->sword = 2;
 	this->shield = 1;
 	this->coin = 0;
 	this->score = 0;
@@ -239,45 +239,7 @@ void Player::setScore(int score)
 
 void Player::setHp(int hp)
 {
-	if (this->sword > 0)
-	{
-		int attack = this->sword;
-		if (this->sword >= hp)
-		{
-			this->sword -= hp;
-			hp -= attack;
-		}
-		else
-		{
-			this->sword = 0;
-			hp -= attack;
-		}
-
-	}
-
-	if (hp > 0)
-	{
-		if (this->shield > 0)
-		{
-			int attack2 = this->shield;
-			if (this->shield >= hp)
-			{
-				this->shield -= hp;
-				hp -= attack2;
-			}
-			else
-			{
-				this->shield = 0;
-				hp -= attack2;
-			}		
-		}
-	}
-
-	if (hp > 0)
-	{
-		this->hp -= hp;
-	}
-
+	this->hp = hp;
 }
 
 void Player::setCoin(int coin)
@@ -342,6 +304,59 @@ void Player::setPosition(int posX, int posY)
 {
 	this->posX = posX;
 	this->posY = posY;
+}
+
+void Player::addHp(int hp)
+{
+	if (hp >= 0)
+	{
+		if (this->hp < 3)
+			this->hp += hp;
+	}
+	else
+		this->hp += hp;
+}
+
+void Player::takeDamage(int damage)
+{
+	if (this->sword > 0)
+	{
+		int attack = this->sword;
+		if (this->sword >= damage)
+		{
+			this->sword -= damage;
+			damage -= attack;
+		}
+		else
+		{
+			this->sword = 0;
+			damage -= attack;
+		}
+
+	}
+
+	if (damage > 0)
+	{
+		if (this->shield > 0)
+		{
+			int attack2 = this->shield;
+			if (this->shield >= damage)
+			{
+				this->shield -= damage;
+				damage -= attack2;
+			}
+			else
+			{
+				this->shield = 0;
+				damage -= attack2;
+			}
+		}
+	}
+
+	if (damage > 0)
+	{
+		this->hp -= damage;
+	}
 }
 
 void Player::update(sf::RenderWindow& target)
