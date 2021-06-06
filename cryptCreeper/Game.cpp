@@ -64,6 +64,7 @@ Game::Game()
 	this->area = new Area();
 	this->mainMenu = new MainMenu();
 	this->info = new Info();
+	this->vendorView = new VendorView();
 }
 
 Game::~Game()
@@ -72,6 +73,7 @@ Game::~Game()
 	delete this->area;
 	delete this->mainMenu;
 	delete this->info;
+	delete this->vendorView;
 }
 
 //Window interaction, Escape button
@@ -104,14 +106,16 @@ const bool Game::running() const
 void Game::update()
 {
 	this->pollEvents();
-	if (this->area->endGame())
-		this->area->update(*this->window);
+	if (this->area->endGame() && this->state == State::area)
+		this->area->update(*this->window, this->state);
 
 	//Update state
 	if (state == State::mainMenu)
 		this->mainMenu->update(*this->window, this->state);
 	if (state == State::info)
 		this->info->update(*this->window, this->state);
+	if (state == State::vendor)
+		this->vendorView->update(*this->window, this->state);
 
 	//Update cursor position
 	this->cursor.setPosition(sf::Mouse::getPosition(*window).x - 450, 
@@ -146,6 +150,10 @@ void Game::render()
 		this->area->render(*this->window);
 		this->window->draw(this->backgroundFog);
 		this->window->draw(this->gameOverText);
+		break;
+	case State::vendor:
+		this->area->render(*this->window);
+		this->vendorView->render(*this->window);
 		break;
 	case State::exit:
 		this->window->close();

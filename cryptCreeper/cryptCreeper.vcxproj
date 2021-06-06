@@ -34,6 +34,8 @@
     <ClCompile Include="Potion.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="Vendor.cpp" />
+    <ClCompile Include="VendorView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Area.h" />
@@ -51,6 +53,8 @@
     <ClInclude Include="Shield.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="utilities.h" />
+    <ClInclude Include="Vendor.h" />
+    <ClInclude Include="VendorView.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

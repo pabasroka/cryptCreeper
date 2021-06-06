@@ -1,4 +1,5 @@
 #pragma once
+#include "utilities.h"
 #include "Field.h"
 #include "HUD.h"
 #include "Player.h"
@@ -8,6 +9,7 @@
 #include "Sword.h"
 #include "Shield.h"
 #include "Potion.h"
+#include "Vendor.h"
 
 class Area
 {
@@ -20,6 +22,8 @@ class Area
 	HUD hud;
 	Player player;
 	Portal* portal;
+	Vendor* vendor;
+	bool isVendorSpawn;
 
 	//dev tools
 	int timerMax;
@@ -36,7 +40,7 @@ public:
 	bool endGame();
 	int getScore();
 
-	void update(sf::RenderWindow& target);
+	void update(sf::RenderWindow& target, State& state);
 	void render(sf::RenderTarget& target);
 };
 

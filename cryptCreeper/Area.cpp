@@ -11,6 +11,7 @@ void Area::initFirstArea()
 void Area::initNewArea()
 {
 	int portalPos = rand() % 5;
+	this->isVendorSpawn = false;
 
 	for (size_t i = 0; i < 5; i++)
 	{
@@ -32,6 +33,14 @@ void Area::randomizer(int posX, int posY)
 {
 	bool condition = (rand() % 100) < 30;
 
+	if (condition && isVendorSpawn == false)
+	{
+		vendor = new Vendor(posX, posY);
+		this->isVendorSpawn = true;
+		return;
+	}
+
+	condition = (rand() % 100) < 20;
 	if (condition)
 	{
 		potions.push_back(new Potion(posX, posY));
@@ -128,7 +137,7 @@ int Area::getScore()
 	return 0;
 }
 
-void Area::update(sf::RenderWindow& target)
+void Area::update(sf::RenderWindow& target, State& state)
 {
 	this->endGame();
 
@@ -148,10 +157,18 @@ void Area::update(sf::RenderWindow& target)
 		this->initNewArea();
 	}
 
+	//Player interacts with the vendor
+	if (isPlayerIntersectSomething(this->player, this->vendor))
+	{
+		state = State::vendor;
+	}
+
+
 	int scoreDrop = rand() % this->player.getLvl() * 50 + this->player.getLvl() * 20;
 
 	this->portal->animation();
 
+	//Check if player intersect with sth
 	for (size_t i = 0; i < this->enemies.size(); i++)
 	{
 		this->enemies[i]->update();
@@ -162,8 +179,6 @@ void Area::update(sf::RenderWindow& target)
 			this->enemies.erase(this->enemies.begin() + i); 
 		}
 	}
-
-	//Check if player intersect with sth
 	for (size_t i = 0; i < this->coins.size(); i++)
 	{
 		this->coins[i]->update();
@@ -250,6 +265,7 @@ void Area::render(sf::RenderTarget& target)
 		this->potions[i]->render(target);
 
 	this->portal->render(target);
+	this->vendor->render(target);
 
 	this->player.render(target);
 }

@@ -2,6 +2,7 @@
 #include "Area.h"
 #include "MainMenu.h"
 #include "Info.h"
+#include "VendorView.h"
 
 class Game
 {
@@ -25,6 +26,8 @@ class Game
 	MainMenu* mainMenu;
 	//Info about the game
 	Info* info;
+	//Shop/vendor view
+	VendorView* vendorView;
 
 	//Cursor
 	sf::Texture cursorTexture;
