@@ -1,19 +1,17 @@
 #pragma once
 #include "Object.h"
-
-class Portal : public Object
+class Trophy : public Object
 {
 	int timerMax;
 	int timer;
 	int frame;
 
 	void initVariables(int posX, int posY);
+	void animation();
 
 public:
-	Portal(int posX, int posY);
-	virtual ~Portal();
-
-	void animation();
+	Trophy(int posX, int posY);
+	virtual ~Trophy();
 
 	void update();
 };

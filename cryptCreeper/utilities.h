@@ -8,5 +8,6 @@ enum class State // 0 - mainMenu, 1 - area, 2 - info, 4 - gameOver
 	info,
 	gameOver,
 	exit,
-	vendor
+	vendor,
+	trophy
 };

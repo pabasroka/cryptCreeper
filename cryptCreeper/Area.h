@@ -10,6 +10,7 @@
 #include "Shield.h"
 #include "Potion.h"
 #include "Vendor.h"
+#include "Trophy.h"
 
 class Area
 {
@@ -22,6 +23,7 @@ class Area
 	HUD hud;
 	Player* player;
 	Portal* portal;
+	Trophy* trophy;
 	Vendor* vendor;
 	bool isVendorSpawn;
 	bool isVendorClosed;
@@ -40,7 +42,6 @@ public:
 
 	void updateHud();
 	bool endGame();
-	int getScore();//int& getScore();
 	Player& getPlayer();
 
 	void update(sf::RenderWindow& target, State& state);

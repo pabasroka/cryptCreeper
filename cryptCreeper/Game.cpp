@@ -3,9 +3,9 @@
 //Set width, height screen, app icon, view 
 void Game::initWindow()
 {
-	this->videoMode = sf::VideoMode(1900, 1600);
+	this->videoMode = sf::VideoMode(1900, 1500);
 	this->window = new sf::RenderWindow(this->videoMode, "Crypt Creeper", sf::Style::Close);
-	this->view.setSize(1900, 1600);
+	this->view.setSize(1900, 1500);
 	this->view.move(sf::Vector2f(0.f, 150.f));
 	if (!this->icon.loadFromFile("Sprites/icon.png"))
 		throw "Could not load icon \n";
@@ -37,6 +37,17 @@ void Game::initGameOverStuff()
 	this->backgroundFog.setSize(sf::Vector2f(2000, 2000));
 }
 
+void Game::initEndGameStuff()
+{
+	this->endGameText = this->gameOverText;
+	this->endGameText.setFillColor(sf::Color(0, 165, 255));
+
+	//Background
+	this->backgroundFogWin.setFillColor(sf::Color(0, 165, 255, 180));
+	this->backgroundFogWin.setPosition(sf::Vector2f(-500.f, -300.f));
+	this->backgroundFogWin.setSize(sf::Vector2f(2000, 2000));
+}
+
 void Game::initCursor()
 {
 	if (!this->cursorTexture.loadFromFile("Sprites/cursor.png"))
@@ -60,6 +71,7 @@ Game::Game()
 {
 	this->initWindow();
 	this->initGameOverStuff();
+	this->initEndGameStuff();
 	this->initCursor();
 	this->mainMenu = new MainMenu();
 	this->info = new Info();
@@ -128,6 +140,8 @@ void Game::update()
 	this->score = this->area->getPlayer().getScore();
 	this->gameOverText.setString("GAME   OVER ! \n\nScore: " + std::to_string(this->score)
 		+ "\n\nPress R \n     to restart !");
+	this->endGameText.setString("YOU   WIN ! \n\nScore: " + std::to_string(this->score)
+		+ "\n\nPress R \n     to restart !");
 
 	//We can reset game at any time
 	this->reset();
@@ -164,6 +178,11 @@ void Game::render()
 		break;
 	case State::exit:
 		this->window->close();
+		break;
+	case State::trophy:
+		this->area->render(*this->window);
+		this->window->draw(this->backgroundFogWin);
+		this->window->draw(this->endGameText);
 		break;
 	}
 

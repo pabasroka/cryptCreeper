@@ -10,7 +10,7 @@ void Player::initVariables(int posX, int posY)
 
 	this->lvl = 1;
 	this->hp = 3;
-	this->sword = 222;
+	this->sword = 1;
 	this->shield = 1;
 	this->coin = 0;
 	this->score = 0;

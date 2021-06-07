@@ -34,7 +34,7 @@ void MainMenu::initMainMenu()
 	this->infoButton.setPosition(sf::Vector2f(300, 800));
 
 	this->exitButton = this->startGameButton;
-	this->exitButton.setPosition(sf::Vector2f(300.f, 1200.f));
+	this->exitButton.setPosition(sf::Vector2f(300.f, 1100.f));
 
 	//Text
 	this->startGameText.setCharacterSize(100);

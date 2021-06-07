@@ -18,6 +18,10 @@ class Game
 	sf::Text gameOverText;
 	sf::RectangleShape backgroundFog;
 
+	//End game - trophy
+	sf::Text endGameText;
+	sf::RectangleShape backgroundFogWin;
+
 	/* ====== STATES ====== */
 	State state;
 	//Area includes enemies, items, player etc.. 
@@ -38,6 +42,7 @@ class Game
 
 	void initWindow();
 	void initGameOverStuff();
+	void initEndGameStuff();
 	void initCursor();
 	void reset();
 

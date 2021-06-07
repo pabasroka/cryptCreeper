@@ -26,7 +26,7 @@ void Info::initInfo()
 	this->goBackButton.setOutlineColor(sf::Color(251, 133, 0));
 	this->goBackButton.setOutlineThickness(10.f);
 	this->goBackButton.setSize(sf::Vector2f(400.f, 200.f));
-	this->goBackButton.setPosition(sf::Vector2f(300.f, 1200.f));
+	this->goBackButton.setPosition(sf::Vector2f(300.f, 1100.f));
 
 	//Sprites
 	this->mouse.setScale(sf::Vector2f(7.f, 7.f));
@@ -59,6 +59,7 @@ void Info::initInfo()
 	ss << "Your goal: achieve the highest possible score  \n\n" <<
 		"* Collect swords and shields to defeat your enemies  \n" <<
 		"* Portals   \n" <<
+		"* You can buy cool stuff from vendor \n" <<
 		"* Player cannot backtracking \n";
 	this->mouseArrowsText.setString(this->ss.str());
 }

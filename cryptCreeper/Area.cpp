@@ -23,11 +23,19 @@ void Area::initNewArea()
 			//create fields
 			fields.push_back(new Field(i * 200, j * 200, 200, this->player->getLvl()));
 
-			// create portal in first row 
-			if (j == 0 && i == portalPos)
-				portal = new Portal(i * 200, j * 200);
-			else if (j != 4 || i != 2) // add objects (enemies, coins, items, etc)
-				randomizer(i * 200, j * 200);
+			if (this->player->getLvl() < 11)
+			{
+				// create portal in first row 
+				if (j == 0 && i == portalPos)
+					portal = new Portal(i * 200, j * 200);
+				else if (j != 4 || i != 2) // add objects (enemies, coins, items, etc)
+					randomizer(i * 200, j * 200);
+			}
+			else
+			{
+				if (j == 2 && i == 2)
+					this->trophy = new Trophy(i * 200, j * 200);
+			}
 		}
 	}
 }
@@ -36,6 +44,7 @@ void Area::randomizer(int posX, int posY)
 {
 	bool condition = (rand() % 100) < 30;
 
+	//Vendor - 1 per level
 	if (condition && isVendorSpawn == false)
 	{
 		vendor = new Vendor(posX, posY);
@@ -43,27 +52,31 @@ void Area::randomizer(int posX, int posY)
 		return;
 	}
 
-	condition = (rand() % 100) < 20;
+	//Potions
+	condition = (rand() % 100) < 5;
 	if (condition)
 	{
 		potions.push_back(new Potion(posX, posY));
 		return;
 	}
 
-	condition = (rand() % 100) < 20;
+	//Coins
+	condition = (rand() % 100) < 22;
 	if (condition)
 	{
 		coins.push_back(new Coin(posX, posY));
 		return;
 	}
 
-	condition = (rand() % 100) < 20;
+	//Swords
+	condition = (rand() % 100) < 12;
 	if (condition)
 	{
 		swords.push_back(new Sword(posX, posY));
 		return;
 	}
 
+	//Shields
 	condition = (rand() % 100) < 10;
 	if (condition)
 	{
@@ -147,11 +160,6 @@ void Area::updateHud()
 		this->player->getCoin(), this->player->getScore());
 }
 
-int Area::getScore()
-{
-	return 0;// this->player->getScore();
-}
-
 void Area::update(sf::RenderWindow& target, State& state)
 {
 	this->endGame();
@@ -172,6 +180,23 @@ void Area::update(sf::RenderWindow& target, State& state)
 		this->initNewArea();
 	}
 
+	//End game
+	if (this->trophy)
+	{
+		this->trophy->update();
+		if (isPlayerIntersectSomething(this->player, this->trophy))
+		{
+			this->enemies.clear();
+			this->coins.clear();
+			this->shields.clear();
+			this->swords.clear();
+			this->potions.clear();
+			this->fields.clear();
+
+			state = State::trophy;
+		}
+	}
+
 	//Player interacts with the vendor
 	if (isPlayerIntersectSomething(this->player, this->vendor) && this->isVendorClosed == false)
 	{
@@ -182,7 +207,7 @@ void Area::update(sf::RenderWindow& target, State& state)
 
 	int scoreDrop = rand() % this->player->getLvl() * 50 + this->player->getLvl() * 20;
 
-	this->portal->animation();
+	this->portal->update();
 
 	//Check if player intersect with sth
 	for (size_t i = 0; i < this->enemies.size(); i++)
@@ -266,22 +291,30 @@ void Area::render(sf::RenderTarget& target)
 	for (size_t i = 0; i < fields.size(); i++)
 		this->fields[i]->render(target);
 
-	//Render objects
-	for (size_t i = 0; i < enemies.size(); i++)
-		this->enemies[i]->render(target);
-	for (size_t i = 0; i < coins.size(); i++)
-		this->coins[i]->render(target);
-	for (size_t i = 0; i < swords.size(); i++)
-		this->swords[i]->render(target);
-	for (size_t i = 0; i < shields.size(); i++)
-		this->shields[i]->render(target);
-	for (size_t i = 0; i < potions.size(); i++)
-		this->potions[i]->render(target);
+	if (this->player->getLvl() < 11)
+	{
+		//Render objects
+		for (size_t i = 0; i < enemies.size(); i++)
+			this->enemies[i]->render(target);
+		for (size_t i = 0; i < coins.size(); i++)
+			this->coins[i]->render(target);
+		for (size_t i = 0; i < swords.size(); i++)
+			this->swords[i]->render(target);
+		for (size_t i = 0; i < shields.size(); i++)
+			this->shields[i]->render(target);
+		for (size_t i = 0; i < potions.size(); i++)
+			this->potions[i]->render(target);
 
-	this->portal->render(target);
+		if (this->isVendorClosed == false)
+			this->vendor->render(target);
 
-	if (this->isVendorClosed == false)
-		this->vendor->render(target);
+		this->portal->render(target);
+	}
+	else //Last floor
+	{
+		if (this->player->getLvl() > 10)
+			this->trophy->render(target);
+	}
 
 	this->player->render(target);
 }

@@ -34,6 +34,7 @@
     <ClCompile Include="Potion.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="Trophy.cpp" />
     <ClCompile Include="Vendor.cpp" />
     <ClCompile Include="VendorView.cpp" />
   </ItemGroup>
@@ -52,6 +53,7 @@
     <ClInclude Include="Potion.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="Sword.h" />
+    <ClInclude Include="Trophy.h" />
     <ClInclude Include="utilities.h" />
     <ClInclude Include="Vendor.h" />
     <ClInclude Include="VendorView.h" />

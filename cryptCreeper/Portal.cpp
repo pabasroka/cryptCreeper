@@ -61,3 +61,8 @@ void Portal::animation()
 	}
 }
 
+void Portal::update()
+{
+	this->animation();
+}
+
