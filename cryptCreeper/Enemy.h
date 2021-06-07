@@ -15,7 +15,7 @@ class Enemy : public Object
 
 	void initVariables(int posX, int posY, int power);
 	void animation();
-	friend bool isPlayerIntersectSomething(Player& player, Object* object);
+	friend bool isPlayerIntersectSomething(Player* player, Object* object);
 
 public:
 	Enemy(int posX, int posY, int power);

@@ -1,6 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <chrono>
+#include <thread>
 #include "utilities.h"
+#include "Player.h"
 
 class VendorView
 {
@@ -13,6 +16,9 @@ class VendorView
 	sf::Sprite item3Sprite;
 	sf::RectangleShape background;
 	sf::RectangleShape closeVendorButton;
+	sf::RectangleShape item1Button;
+	sf::RectangleShape item2Button;
+	sf::RectangleShape item3Button;
 	sf::Font font;
 	sf::Text item1Text;
 	sf::Text item2Text;
@@ -22,14 +28,16 @@ class VendorView
 
 	void initVariables();
 	void initVendor();
-	void buttonsClick(sf::RenderWindow& target, State& state);
-	void buttonsHover(sf::RenderWindow& target);
+	void buttonsClick(sf::RenderWindow& target, State& state, Player& player);
+	void buttonsHover(sf::RenderWindow& target, sf::RectangleShape& button);
+	void buyItem(Player& player);
 
 public:
 	VendorView();
 	virtual ~VendorView();
 
 	void update(sf::RenderWindow& target, State& state);
+	void update(sf::RenderWindow& target, State& state, Player& player);
 	void render(sf::RenderTarget& target);
 };
 

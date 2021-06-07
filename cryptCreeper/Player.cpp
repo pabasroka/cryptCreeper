@@ -10,7 +10,7 @@ void Player::initVariables(int posX, int posY)
 
 	this->lvl = 1;
 	this->hp = 3;
-	this->sword = 2;
+	this->sword = 222;
 	this->shield = 1;
 	this->coin = 0;
 	this->score = 0;
@@ -203,7 +203,7 @@ bool Player::isAnyLegitMove()
 }
 
 // Constructor / destructor
-Player::Player()
+Player::Player(int posX, int posY)
 	: Object(posX, posY)
 {
 	this->initVariables(posX, posY);

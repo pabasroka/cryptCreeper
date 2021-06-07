@@ -22,7 +22,7 @@ class MainMenu
 	void initVariables();
 	void initMainMenu();
 	void buttonsClick(sf::RenderWindow& target, State& state);
-	void buttonsHover(sf::RenderWindow& target);
+	void buttonsHover(sf::RenderWindow& target, sf::RectangleShape& button);
 
 public:
 	MainMenu();

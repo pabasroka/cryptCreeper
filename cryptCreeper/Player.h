@@ -22,10 +22,10 @@ class Player : public Object
 	void moveKeyboard();
 	void moveMouse(sf::RenderWindow& target);
 	bool isAnyLegitMove();
-	friend bool isPlayerIntersectSomething(Player& player, Object* object);
+	friend bool isPlayerIntersectSomething(Player* player, Object* object);
 
 public:
-	Player();
+	Player(int posX, int posY);
 	virtual ~Player();
 
 	//Movement

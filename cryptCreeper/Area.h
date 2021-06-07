@@ -20,10 +20,11 @@ class Area
 	std::vector<Shield*> shields;
 	std::vector<Potion*> potions;
 	HUD hud;
-	Player player;
+	Player* player;
 	Portal* portal;
 	Vendor* vendor;
 	bool isVendorSpawn;
+	bool isVendorClosed;
 
 	//dev tools
 	int timerMax;
@@ -38,7 +39,8 @@ public:
 	virtual ~Area();
 
 	bool endGame();
-	int getScore();
+	int getScore();//int& getScore();
+	Player& getPlayer();
 
 	void update(sf::RenderWindow& target, State& state);
 	void render(sf::RenderTarget& target);

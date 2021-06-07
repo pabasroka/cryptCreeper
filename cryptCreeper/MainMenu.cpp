@@ -94,55 +94,25 @@ void MainMenu::buttonsClick(sf::RenderWindow& target, State& state)
 		state = State::exit;
 }
 
-void MainMenu::buttonsHover(sf::RenderWindow& target)
+void MainMenu::buttonsHover(sf::RenderWindow& target, sf::RectangleShape& button)
 {
 	sf::Vector2i pos = sf::Vector2i(sf::Mouse::getPosition(target).x - 480,
 		sf::Mouse::getPosition(target).y - 150);
 
-	//Start game
-	if (pos.x > this->startGameButton.getPosition().x
-		&& pos.x < this->startGameButton.getPosition().x + this->startGameButton.getSize().x
-		&& pos.y > this->startGameButton.getPosition().y
-		&& pos.y < this->startGameButton.getPosition().y + this->startGameButton.getSize().y)
+	if (pos.x > button.getPosition().x
+		&& pos.x < button.getPosition().x + button.getSize().x
+		&& pos.y > button.getPosition().y
+		&& pos.y < button.getPosition().y + button.getSize().y)
 	{
-		this->startGameButton.setFillColor(sf::Color::Red);
-		this->startGameButton.setOutlineColor(sf::Color(251, 233, 120));
+		button.setFillColor(sf::Color::Red);
+		button.setOutlineColor(sf::Color(251, 233, 120));
 	}
 	else
 	{
-		this->startGameButton.setFillColor(sf::Color::Blue);
-		this->startGameButton.setOutlineColor(sf::Color(251, 133, 0));
+		button.setFillColor(sf::Color::Blue);
+		button.setOutlineColor(sf::Color(251, 133, 0));
 	}
 
-	//Game info
-	if (pos.x > this->infoButton.getPosition().x
-		&& pos.x < this->infoButton.getPosition().x + this->infoButton.getSize().x
-		&& pos.y > this->infoButton.getPosition().y
-		&& pos.y < this->infoButton.getPosition().y + this->infoButton.getSize().y)
-	{
-		this->infoButton.setFillColor(sf::Color::Red);
-		this->infoButton.setOutlineColor(sf::Color(251, 233, 120));
-	}
-	else
-	{
-		this->infoButton.setFillColor(sf::Color::Blue);
-		this->infoButton.setOutlineColor(sf::Color(251, 133, 0));
-	}
-
-	//Exit 
-	if (pos.x > this->exitButton.getPosition().x
-		&& pos.x < this->exitButton.getPosition().x + this->exitButton.getSize().x
-		&& pos.y > this->exitButton.getPosition().y
-		&& pos.y < this->exitButton.getPosition().y + this->exitButton.getSize().y)
-	{
-		this->exitButton.setFillColor(sf::Color::Red);
-		this->exitButton.setOutlineColor(sf::Color(251, 233, 120));
-	}
-	else
-	{
-		this->exitButton.setFillColor(sf::Color::Blue);
-		this->exitButton.setOutlineColor(sf::Color(251, 133, 0));
-	}
 }
 
 MainMenu::MainMenu()
@@ -157,7 +127,9 @@ MainMenu::~MainMenu()
 
 void MainMenu::update(sf::RenderWindow& target, State& state)
 {
-	this->buttonsHover(target);
+	this->buttonsHover(target, this->startGameButton);
+	this->buttonsHover(target, this->infoButton);
+	this->buttonsHover(target, this->exitButton);
 	this->buttonsClick(target, state);
 }
 

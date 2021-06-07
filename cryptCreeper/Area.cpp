@@ -2,6 +2,8 @@
 
 void Area::initFirstArea()
 {
+	this->player = new Player(2 * 200, 4 * 200);
+
 	this->initNewArea();
 	
 	this->timerMax = 5;
@@ -12,13 +14,14 @@ void Area::initNewArea()
 {
 	int portalPos = rand() % 5;
 	this->isVendorSpawn = false;
+	this->isVendorClosed = false;
 
 	for (size_t i = 0; i < 5; i++)
 	{
 		for (size_t j = 0; j < 5; j++)
 		{
 			//create fields
-			fields.push_back(new Field(i * 200, j * 200, 200, this->player.getLvl()));
+			fields.push_back(new Field(i * 200, j * 200, 200, this->player->getLvl()));
 
 			// create portal in first row 
 			if (j == 0 && i == portalPos)
@@ -69,7 +72,7 @@ void Area::randomizer(int posX, int posY)
 	}
 
 	// If the previous conditions doesn't run
-	int randomEnemy = rand() % this->player.getLvl();
+	int randomEnemy = rand() % this->player->getLvl();
 
 	switch (randomEnemy)
 	{
@@ -106,10 +109,10 @@ void Area::randomizer(int posX, int posY)
 	}
 }
 
-bool isPlayerIntersectSomething(Player& player, Object* object)
+bool isPlayerIntersectSomething(Player* player, Object* object)
 {
-	if (player.getPosition().x == object->getPosition().x &&
-		player.getPosition().y == object->getPosition().y)
+	if (player->getPosition().x == object->getPosition().x &&
+		player->getPosition().y == object->getPosition().y)
 		return true;
 	else
 		return false;
@@ -124,9 +127,14 @@ Area::~Area()
 {
 }
 
+Player& Area::getPlayer()
+{
+	return *this->player;
+}
+
 bool Area::endGame()
 {
-	if (!this->player.isDead())
+	if (!this->player->isDead())
 		return true;
 	else
 		return false;
@@ -134,14 +142,14 @@ bool Area::endGame()
 
 int Area::getScore()
 {
-	return 0;
+	return 0;// this->player->getScore();
 }
 
 void Area::update(sf::RenderWindow& target, State& state)
 {
 	this->endGame();
 
-	this->player.update(target);
+	this->player->update(target);
 
 	//Player entered the portal
 	if (isPlayerIntersectSomething(this->player, this->portal))
@@ -153,18 +161,19 @@ void Area::update(sf::RenderWindow& target, State& state)
 		this->potions.clear();
 		this->fields.clear();
 
-		this->player.nextAreaSettings();
+		this->player->nextAreaSettings();
 		this->initNewArea();
 	}
 
 	//Player interacts with the vendor
-	if (isPlayerIntersectSomething(this->player, this->vendor))
+	if (isPlayerIntersectSomething(this->player, this->vendor) && this->isVendorClosed == false)
 	{
 		state = State::vendor;
+		this->isVendorClosed = true;
 	}
 
 
-	int scoreDrop = rand() % this->player.getLvl() * 50 + this->player.getLvl() * 20;
+	int scoreDrop = rand() % this->player->getLvl() * 50 + this->player->getLvl() * 20;
 
 	this->portal->animation();
 
@@ -174,8 +183,8 @@ void Area::update(sf::RenderWindow& target, State& state)
 		this->enemies[i]->update();
 		if (isPlayerIntersectSomething(this->player, this->enemies[i]))
 		{
-			this->player.setScore(scoreDrop);
-			this->player.takeDamage(this->enemies[i]->getPower());
+			this->player->setScore(scoreDrop);
+			this->player->takeDamage(this->enemies[i]->getPower());
 			this->enemies.erase(this->enemies.begin() + i); 
 		}
 	}
@@ -184,36 +193,36 @@ void Area::update(sf::RenderWindow& target, State& state)
 		this->coins[i]->update();
 		if (isPlayerIntersectSomething(this->player, this->coins[i]))
 		{
-			this->player.setCoin(1);
-			this->player.setScore(scoreDrop);
+			this->player->setCoin(1);
+			this->player->setScore(scoreDrop);
 			this->coins.erase(this->coins.begin() + i);
 		}
 	}
 	for (size_t i = 0; i < this->swords.size(); i++)
 		if (isPlayerIntersectSomething(this->player, this->swords[i]))
 		{
-			this->player.setSword(this->swords[i]->getDmg());
-			this->player.setScore(scoreDrop);
+			this->player->setSword(this->swords[i]->getDmg());
+			this->player->setScore(scoreDrop);
 			this->swords.erase(this->swords.begin() + i);
 		}
 	for (size_t i = 0; i < this->shields.size(); i++)
 		if (isPlayerIntersectSomething(this->player, this->shields[i]))
 		{		
-			this->player.setShield(this->shields[i]->getArmor());
-			this->player.setScore(scoreDrop);
+			this->player->setShield(this->shields[i]->getArmor());
+			this->player->setScore(scoreDrop);
 			this->shields.erase(this->shields.begin() + i);
 		}
 	for (size_t i = 0; i < this->potions.size(); i++)
 		if (isPlayerIntersectSomething(this->player, this->potions[i]))
 		{
-			this->player.addHp(this->potions[i]->getEffect());
-			this->player.setScore(scoreDrop);
+			this->player->addHp(this->potions[i]->getEffect());
+			this->player->setScore(scoreDrop);
 			this->potions.erase(this->potions.begin() + i);
 		}
 
 	// User interface stats text
-	this->hud.setText(this->player.getSword(), this->player.getShield(),
-		this->player.getCoin(), this->player.getScore());
+	this->hud.setText(this->player->getSword(), this->player->getShield(),
+		this->player->getCoin(), this->player->getScore());
 
 
 	//dev tools
@@ -225,20 +234,20 @@ void Area::update(sf::RenderWindow& target, State& state)
 		this->timer = 0;
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
-			this->player.setHp(-1);
+			this->player->setHp(-1);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
-			this->player.setCoin(1);
+			this->player->setCoin(1);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
-			this->player.setSword(1);
+			this->player->setSword(1);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
-			this->player.setShield(1);
+			this->player->setShield(1);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
 		{
-			this->player.setLvl(1);
-			std::cout << this->player.getLvl();
+			this->player->setLvl(1);
+			std::cout << this->player->getLvl();
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
-			this->player.showMovementArea();
+			this->player->showMovementArea();
 	}
 
 }
@@ -246,7 +255,7 @@ void Area::update(sf::RenderWindow& target, State& state)
 void Area::render(sf::RenderTarget& target)
 {
 	//Render bottom of screen
-	this->hud.render(target, this->player.getHp());
+	this->hud.render(target, this->player->getHp());
 
 	//Render main board
 	for (size_t i = 0; i < fields.size(); i++)
@@ -265,7 +274,9 @@ void Area::render(sf::RenderTarget& target)
 		this->potions[i]->render(target);
 
 	this->portal->render(target);
-	this->vendor->render(target);
 
-	this->player.render(target);
+	if (this->isVendorClosed == false)
+		this->vendor->render(target);
+
+	this->player->render(target);
 }

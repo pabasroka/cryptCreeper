@@ -29,6 +29,9 @@ class Game
 	//Shop/vendor view
 	VendorView* vendorView;
 
+	//Player stats
+	int score;
+
 	//Cursor
 	sf::Texture cursorTexture;
 	sf::Sprite cursor;

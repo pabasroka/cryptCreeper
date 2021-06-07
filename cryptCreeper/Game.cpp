@@ -13,7 +13,9 @@ void Game::initWindow()
 	this->window->setFramerateLimit(60);
 	this->window->setIcon(this->icon.getSize().x, this->icon.getSize().y, this->icon.getPixelsPtr());
 
-	this->state = State::mainMenu;
+	this->state = State::vendor;
+	this->score = 0;
+	//this->player = this->area->getPlayer();
 }
 
 void Game::initGameOverStuff()
@@ -28,8 +30,6 @@ void Game::initGameOverStuff()
 	this->gameOverText.setOutlineColor(sf::Color::Black);
 	this->gameOverText.setOutlineThickness(10.f);
 	this->gameOverText.setPosition(20, 0);
-	this->gameOverText.setString("GAME   OVER ! \n\nScore: " + std::to_string(this->area->getScore()) 
-		+ "\n\nPress R \n     to restart !");
 
 	//Background
 	this->backgroundFog.setFillColor(sf::Color(20, 20, 20, 220));
@@ -61,9 +61,9 @@ Game::Game()
 	this->initWindow();
 	this->initGameOverStuff();
 	this->initCursor();
-	this->area = new Area();
 	this->mainMenu = new MainMenu();
 	this->info = new Info();
+	this->area = new Area();
 	this->vendorView = new VendorView();
 }
 
@@ -115,11 +115,19 @@ void Game::update()
 	if (state == State::info)
 		this->info->update(*this->window, this->state);
 	if (state == State::vendor)
-		this->vendorView->update(*this->window, this->state);
+	{
+		this->vendorView->update(*this->window, this->state, this->area->getPlayer());
+		this->area->render(*this->window);
+	}
 
 	//Update cursor position
 	this->cursor.setPosition(sf::Mouse::getPosition(*window).x - 450, 
 		sf::Mouse::getPosition(*window).y - 150);
+
+	//Update score text
+	this->score = this->area->getPlayer().getScore();
+	this->gameOverText.setString("GAME   OVER ! \n\nScore: " + std::to_string(this->score)
+		+ "\n\nPress R \n     to restart !");
 
 	//We can reset game at any time
 	this->reset();
@@ -140,7 +148,6 @@ void Game::render()
 		break;
 	case State::area:
 		//Render all of the objects
-		
 		this->area->render(*this->window);
 		break;
 	case State::info:
