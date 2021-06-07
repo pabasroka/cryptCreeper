@@ -317,6 +317,22 @@ void Player::addHp(int hp)
 		this->hp += hp;
 }
 
+void Player::addSword(int sword)
+{
+	this->sword += sword;
+}
+
+void Player::addShield(int shield)
+{
+	this->shield += shield;
+}
+
+void Player::addHeart(int heart)
+{
+	if (this->hp < 3)
+		this->hp += heart;
+}
+
 void Player::takeDamage(int damage)
 {
 	if (this->sword > 0)
@@ -332,7 +348,6 @@ void Player::takeDamage(int damage)
 			this->sword = 0;
 			damage -= attack;
 		}
-
 	}
 
 	if (damage > 0)

@@ -50,6 +50,9 @@ public:
 	void setCoin(int coin);
 	void setPosition(int posX, int posY);
 	void addHp(int hp);
+	void addSword(int sword);
+	void addShield(int shield);
+	void addHeart(int heart);
 	void takeDamage(int damage);
 	bool isDead();
 

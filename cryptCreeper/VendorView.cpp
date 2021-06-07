@@ -40,7 +40,7 @@ void VendorView::initVendor()
 		this->rectSize, this->rectSize));
 
 	this->item3Sprite = this->item1Sprite;
-	this->item3Sprite.setTextureRect(sf::IntRect(0, 3 * this->rectSize,
+	this->item3Sprite.setTextureRect(sf::IntRect(2 * this->rectSize, 0,
 		this->rectSize, this->rectSize));
 	this->item3Sprite.setPosition(sf::Vector2f(680.f, 400.f));
 
@@ -51,16 +51,39 @@ void VendorView::initVendor()
 
 	this->item1Button.setOutlineThickness(10.f);
 	this->item1Button.setSize(sf::Vector2f(100.f, 100.f));
-	this->item1Button.setPosition(sf::Vector2f(150.f, 550.f));
+	this->item1Button.setPosition(sf::Vector2f(180.f, 600.f));
 
 	this->item2Button = this->item1Button;
-	this->item2Button.setPosition(sf::Vector2f(400.f, 550.f));
+	this->item2Button.setPosition(sf::Vector2f(430.f, 600.f));
 
 	this->item3Button = this->item1Button;
-	this->item3Button.setPosition(sf::Vector2f(680.f, 550.f));
+	this->item3Button.setPosition(sf::Vector2f(710.f, 600.f));
 	
 
 	//Text
+	this->item1Text.setCharacterSize(80);
+	this->item1Text.setPosition(sf::Vector2f(this->item1Button.getPosition().x + 30,
+		this->item1Button.getPosition().y));
+	this->item1Text.setFillColor(sf::Color::Yellow);
+	this->item1Text.setOutlineColor(sf::Color::Black);
+	this->item1Text.setOutlineThickness(10.f);
+	this->item1Text.setString("2");
+
+	this->item2Text = this->item1Text;
+	this->item2Text.setString("2");
+	this->item2Text.setPosition(sf::Vector2f(this->item2Button.getPosition().x + 30,
+		this->item2Button.getPosition().y));
+
+	this->item3Text = this->item1Text;
+	this->item3Text.setString("5");
+	this->item3Text.setPosition(sf::Vector2f(this->item3Button.getPosition().x + 30,
+		this->item3Button.getPosition().y));
+
+	this->closeVendorText = this->item1Text;
+	this->closeVendorText.setString("Leave");
+	this->closeVendorText.setFillColor(sf::Color::White);
+	this->closeVendorText.setPosition(sf::Vector2f(this->closeVendorButton.getPosition().x + 70,
+		this->closeVendorButton.getPosition().y));
 }
 
 void VendorView::buttonsClick(sf::RenderWindow& target, State& state, Player& player)
@@ -80,31 +103,46 @@ void VendorView::buttonsClick(sf::RenderWindow& target, State& state, Player& pl
 	}
 
 	//Items
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Sword
 		&& pos.x > this->item1Button.getPosition().x
 		&& pos.x < this->item1Button.getPosition().x + this->item1Button.getSize().x
 		&& pos.y > this->item1Button.getPosition().y
 		&& pos.y < this->item1Button.getPosition().y + this->item1Button.getSize().y)
 	{
-		//buyItem();
+		if (player.getCoin() >= 2);
+		{
+			player.addSword(1);
+			player.setCoin(-2);
+			std::this_thread::sleep_for(std::chrono::milliseconds(150));
+		}
 	}
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Shield
 		&& pos.x > this->item2Button.getPosition().x
 		&& pos.x < this->item2Button.getPosition().x + this->item2Button.getSize().x
 		&& pos.y > this->item2Button.getPosition().y
 		&& pos.y < this->item2Button.getPosition().y + this->item2Button.getSize().y)
 	{
-		buyItem(player);
+		if (player.getCoin() >= 2);
+		{
+			player.addShield(1);
+			player.setCoin(-2);
+			std::this_thread::sleep_for(std::chrono::milliseconds(150));
+		}
 	}
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Heart
 		&& pos.x > this->item3Button.getPosition().x
 		&& pos.x < this->item3Button.getPosition().x + this->item3Button.getSize().x
 		&& pos.y > this->item3Button.getPosition().y
 		&& pos.y < this->item3Button.getPosition().y + this->item3Button.getSize().y)
 	{
-		//buyItem();
+		if (player.getCoin() >= 5);
+		{
+			player.addHp(1);
+			player.setCoin(-5);
+			std::this_thread::sleep_for(std::chrono::milliseconds(150));
+		}
 	}
 }
 
@@ -127,11 +165,6 @@ void VendorView::buttonsHover(sf::RenderWindow& target, sf::RectangleShape& butt
 		button.setFillColor(sf::Color(128, 128, 128));
 		button.setOutlineColor(sf::Color(50, 50, 50));
 	}
-}
-
-void VendorView::buyItem(Player& player)
-{
-	player.setShield(500);
 }
 
 VendorView::VendorView()
@@ -164,4 +197,8 @@ void VendorView::render(sf::RenderTarget& target)
 	target.draw(this->item1Button);
 	target.draw(this->item2Button);
 	target.draw(this->item3Button);
+	target.draw(this->item1Text);
+	target.draw(this->item2Text);
+	target.draw(this->item3Text);
+	target.draw(this->closeVendorText);
 }

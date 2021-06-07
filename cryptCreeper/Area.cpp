@@ -140,6 +140,13 @@ bool Area::endGame()
 		return false;
 }
 
+void Area::updateHud()
+{
+	// User interface stats text
+	this->hud.setText(this->player->getSword(), this->player->getShield(),
+		this->player->getCoin(), this->player->getScore());
+}
+
 int Area::getScore()
 {
 	return 0;// this->player->getScore();
@@ -220,9 +227,7 @@ void Area::update(sf::RenderWindow& target, State& state)
 			this->potions.erase(this->potions.begin() + i);
 		}
 
-	// User interface stats text
-	this->hud.setText(this->player->getSword(), this->player->getShield(),
-		this->player->getCoin(), this->player->getScore());
+	this->updateHud();
 
 
 	//dev tools

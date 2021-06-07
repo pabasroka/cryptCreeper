@@ -38,6 +38,7 @@ public:
 	Area();
 	virtual ~Area();
 
+	void updateHud();
 	bool endGame();
 	int getScore();//int& getScore();
 	Player& getPlayer();

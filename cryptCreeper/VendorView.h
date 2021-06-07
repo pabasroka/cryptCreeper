@@ -23,6 +23,7 @@ class VendorView
 	sf::Text item1Text;
 	sf::Text item2Text;
 	sf::Text item3Text;
+	sf::Text closeVendorText;
 
 	int rectSize;
 
@@ -30,13 +31,11 @@ class VendorView
 	void initVendor();
 	void buttonsClick(sf::RenderWindow& target, State& state, Player& player);
 	void buttonsHover(sf::RenderWindow& target, sf::RectangleShape& button);
-	void buyItem(Player& player);
 
 public:
 	VendorView();
 	virtual ~VendorView();
 
-	void update(sf::RenderWindow& target, State& state);
 	void update(sf::RenderWindow& target, State& state, Player& player);
 	void render(sf::RenderTarget& target);
 };

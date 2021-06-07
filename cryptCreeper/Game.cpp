@@ -13,7 +13,7 @@ void Game::initWindow()
 	this->window->setFramerateLimit(60);
 	this->window->setIcon(this->icon.getSize().x, this->icon.getSize().y, this->icon.getPixelsPtr());
 
-	this->state = State::vendor;
+	this->state = State::mainMenu;
 	this->score = 0;
 	//this->player = this->area->getPlayer();
 }
@@ -117,7 +117,7 @@ void Game::update()
 	if (state == State::vendor)
 	{
 		this->vendorView->update(*this->window, this->state, this->area->getPlayer());
-		this->area->render(*this->window);
+		this->area->updateHud();
 	}
 
 	//Update cursor position
