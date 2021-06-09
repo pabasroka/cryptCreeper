@@ -107,42 +107,36 @@ void VendorView::buttonsClick(sf::RenderWindow& target, State& state, Player& pl
 		&& pos.x > this->item1Button.getPosition().x
 		&& pos.x < this->item1Button.getPosition().x + this->item1Button.getSize().x
 		&& pos.y > this->item1Button.getPosition().y
-		&& pos.y < this->item1Button.getPosition().y + this->item1Button.getSize().y)
+		&& pos.y < this->item1Button.getPosition().y + this->item1Button.getSize().y
+		&& player.getCoin() >= 2)
 	{
-		if (player.getCoin() >= 2);
-		{
-			player.addSword(1);
-			player.setCoin(-2);
-			std::this_thread::sleep_for(std::chrono::milliseconds(150));
-		}
+		player.addSword(1);
+		player.setCoin(-2);
+		std::this_thread::sleep_for(std::chrono::milliseconds(150));
 	}
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Shield
 		&& pos.x > this->item2Button.getPosition().x
 		&& pos.x < this->item2Button.getPosition().x + this->item2Button.getSize().x
 		&& pos.y > this->item2Button.getPosition().y
-		&& pos.y < this->item2Button.getPosition().y + this->item2Button.getSize().y)
+		&& pos.y < this->item2Button.getPosition().y + this->item2Button.getSize().y
+		&& player.getCoin() >= 2)
 	{
-		if (player.getCoin() >= 2);
-		{
-			player.addShield(1);
-			player.setCoin(-2);
-			std::this_thread::sleep_for(std::chrono::milliseconds(150));
-		}
+		player.addShield(1);
+		player.setCoin(-2);
+		std::this_thread::sleep_for(std::chrono::milliseconds(150));
 	}
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) //Heart
 		&& pos.x > this->item3Button.getPosition().x
 		&& pos.x < this->item3Button.getPosition().x + this->item3Button.getSize().x
 		&& pos.y > this->item3Button.getPosition().y
-		&& pos.y < this->item3Button.getPosition().y + this->item3Button.getSize().y)
+		&& pos.y < this->item3Button.getPosition().y + this->item3Button.getSize().y
+		&& player.getCoin() >= 5)
 	{
-		if (player.getCoin() >= 5);
-		{
-			player.addHp(1);
-			player.setCoin(-5);
-			std::this_thread::sleep_for(std::chrono::milliseconds(150));
-		}
+		player.addHp(1);
+		player.setCoin(-5);
+		std::this_thread::sleep_for(std::chrono::milliseconds(150));
 	}
 }
 

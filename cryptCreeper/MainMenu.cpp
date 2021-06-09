@@ -31,10 +31,10 @@ void MainMenu::initMainMenu()
 	this->startGameButton.setPosition(sf::Vector2f(300, 400));
 
 	this->infoButton = this->startGameButton;
-	this->infoButton.setPosition(sf::Vector2f(300, 800));
+	this->infoButton.setPosition(sf::Vector2f(300, 700));
 
 	this->exitButton = this->startGameButton;
-	this->exitButton.setPosition(sf::Vector2f(300.f, 1100.f));
+	this->exitButton.setPosition(sf::Vector2f(300.f, 1000.f));
 
 	//Text
 	this->startGameText.setCharacterSize(100);
@@ -59,6 +59,35 @@ void MainMenu::initMainMenu()
 	this->titleText.setCharacterSize(120);
 	this->titleText.setPosition(sf::Vector2f(200, 0));
 	this->titleText.setString("Crypt Creeper");
+
+	//HighScore
+	this->highScoreText.setFont(this->font);
+	this->highScoreText.setCharacterSize(70);
+	this->highScoreText.setPosition(sf::Vector2f(300.f, 1300.f));
+	this->highScoreText.setFillColor(sf::Color::White);
+	this->highScoreText.setOutlineColor(sf::Color::Black);
+	this->highScoreText.setOutlineThickness(5.f);
+}
+
+void MainMenu::initHighScore()
+{
+	std::fstream file;
+	std::string line;
+
+	file.open("score.txt", std::ios::in);
+	if (file.is_open())
+	{
+		while (getline(file, line))
+		{
+			this->highScore = stoi(line);
+		}
+	}
+	else
+		this->highScore = 0;
+
+	this->highScoreText.setString("HIGHSCORE: " + std::to_string(this->highScore));
+
+	file.close();
 }
 
 void MainMenu::buttonsClick(sf::RenderWindow& target, State& state)
@@ -119,6 +148,7 @@ MainMenu::MainMenu()
 {
 	this->initVariables();
 	this->initMainMenu();
+	this->initHighScore();
 }
 
 MainMenu::~MainMenu()
@@ -131,6 +161,7 @@ void MainMenu::update(sf::RenderWindow& target, State& state)
 	this->buttonsHover(target, this->infoButton);
 	this->buttonsHover(target, this->exitButton);
 	this->buttonsClick(target, state);
+	this->initHighScore();
 }
 
 void MainMenu::render(sf::RenderTarget& target)
@@ -144,4 +175,5 @@ void MainMenu::render(sf::RenderTarget& target)
 	target.draw(this->startGameText);
 	target.draw(this->infoText);
 	target.draw(this->exitText);
+	target.draw(this->highScoreText);
 }

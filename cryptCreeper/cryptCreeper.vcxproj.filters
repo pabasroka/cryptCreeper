@@ -69,7 +69,7 @@
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Trophy.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +124,8 @@
     <ClInclude Include="Vendor.h">
       <Filter>Source Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Trophy.h" />
+    <ClInclude Include="Trophy.h">
+      <Filter>Source Files\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

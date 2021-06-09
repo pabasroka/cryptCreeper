@@ -3,6 +3,7 @@
 #include "MainMenu.h"
 #include "Info.h"
 #include "VendorView.h"
+#include <fstream>
 
 class Game
 {
@@ -35,7 +36,7 @@ class Game
 
 	//Player stats
 	int score;
-
+	int oldScore{};
 	//Cursor
 	sf::Texture cursorTexture;
 	sf::Sprite cursor;
@@ -44,6 +45,7 @@ class Game
 	void initGameOverStuff();
 	void initEndGameStuff();
 	void initCursor();
+	void highScoreToFile();
 	void reset();
 
 public:

@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <chrono>
 #include <thread>
+#include <fstream>
 
 class MainMenu
 {
@@ -19,8 +20,13 @@ class MainMenu
 	sf::Text infoText;
 	sf::Text exitText;
 
+	//Highscore
+	int highScore;
+	sf::Text highScoreText;
+	
 	void initVariables();
 	void initMainMenu();
+	void initHighScore();
 	void buttonsClick(sf::RenderWindow& target, State& state);
 	void buttonsHover(sf::RenderWindow& target, sf::RectangleShape& button);
 

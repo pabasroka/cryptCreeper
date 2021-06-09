@@ -15,7 +15,6 @@ void Game::initWindow()
 
 	this->state = State::mainMenu;
 	this->score = 0;
-	//this->player = this->area->getPlayer();
 }
 
 void Game::initGameOverStuff()
@@ -55,6 +54,34 @@ void Game::initCursor()
 	this->cursor.setTexture(this->cursorTexture);
 	this->window->setMouseCursorVisible(false);
 	this->cursor.setScale(sf::Vector2f(5.f, 5.f));
+}
+
+void Game::highScoreToFile()
+{
+	std::fstream file;
+	std::string line;
+	
+	file.open("score.txt", std::ios::in);
+	if (file.is_open())
+	{
+		while (getline(file, line))
+		{
+			this->oldScore = stoi(line);
+		}
+	}
+	file.close();
+
+	this->score = this->area->getPlayer().getScore();
+
+	if (this->score > this->oldScore)
+	{
+		file.open("score.txt", std::ios::out);
+		if (file.is_open())
+		{
+			file << this->score;
+		}
+		file.close();
+	}
 }
 
 void Game::reset()
@@ -101,6 +128,7 @@ void Game::pollEvents()
 		case sf::Event::KeyPressed:
 			if (this->event.key.code == sf::Keyboard::Escape)
 			{
+				this->mainMenu->update(*this->window, this->state);
 				this->state = State::mainMenu;
 				delete this->area;
 				this->area = new Area();
@@ -122,14 +150,18 @@ void Game::update()
 		this->area->update(*this->window, this->state);
 
 	//Update state
-	if (state == State::mainMenu)
+	if (this->state == State::mainMenu)
 		this->mainMenu->update(*this->window, this->state);
-	if (state == State::info)
+	if (this->state == State::info)
 		this->info->update(*this->window, this->state);
-	if (state == State::vendor)
+	if (this->state == State::vendor)
 	{
 		this->vendorView->update(*this->window, this->state, this->area->getPlayer());
 		this->area->updateHud();
+	}
+	if (this->state == State::gameOver)
+	{
+		this->highScoreToFile();
 	}
 
 	//Update cursor position
